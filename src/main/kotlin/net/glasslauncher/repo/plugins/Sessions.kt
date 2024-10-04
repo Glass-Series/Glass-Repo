@@ -9,7 +9,7 @@ const val USER_LOGIN_COOKIE = "user_login"
 fun Application.configureSessions() {
     install(Sessions) {
         cookie<CookieData>(USER_LOGIN_COOKIE, directorySessionStorage(File("sessions"))) {
-            cookie.maxAgeInSeconds = 1 * 60 * 60 * 24 * 7 // 1 week.
+            cookie.maxAgeInSeconds = 60 * 60 * 24 * 7 // 1 week.
         }
     }
 

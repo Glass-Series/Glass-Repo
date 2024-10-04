@@ -24,14 +24,14 @@ fun main() {
     val cacheFile = File("repo/minecraftMeta/index.json")
     var json: VersionManifestList
     try {
-        json = net.glasslauncher.repo.JsonReader.Companion.fromJson(
+        json = JsonReader.fromJson(
             URL("https://skyrising.github.io/mc-versions/version_manifest.json").openStream().readAllBytes()
                 .toString(StandardCharsets.UTF_8)
         )
-        cacheFile.writeText(net.glasslauncher.repo.JsonReader.Companion.toJson(json))
+        cacheFile.writeText(JsonReader.toJson(json))
     } catch (e: Exception) {
-        net.glasslauncher.repo.GlassLogger.Companion.INSTANCE.error("Unable to get remote manifests, using last successfully cached file.")
-        json = net.glasslauncher.repo.JsonReader.Companion.fromJson(cacheFile.readText())
+        GlassLogger.INSTANCE.error("Unable to get remote manifests, using last successfully cached file.")
+        json = JsonReader.fromJson(cacheFile.readText())
     }
     json.process()
     VersionManifestList.allVersions.entries.stream().sorted(Comparator.comparing<MutableMap.MutableEntry<String, VersionDetails>?, Long?> { it.value.releaseTime }.reversed()).forEach {
@@ -41,7 +41,7 @@ fun main() {
         VersionManifestList.headerToVersions[header]!!.add(it.value)
     }
 
-    net.glasslauncher.repo.GlassLogger.Companion.INSTANCE.info("Indexed ${VersionManifestList.allVersions.size} MC versions.")
+    GlassLogger.INSTANCE.info("Indexed ${VersionManifestList.allVersions.size} MC versions.")
 
     embeddedServer(Netty, port = 8080, host = "0.0.0.0", watchPaths = listOf("classes")) {
         install(ContentNegotiation) {
