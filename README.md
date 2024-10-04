@@ -1,3 +1,6 @@
+# This Code Currently Isn't Live
+Cause this is still missing a few major features that need to be implemented, or hooked up to the front end.
+
 # Glass Repo
 ###### Holy shit, about time you published the source like you said you would, calm.
 
