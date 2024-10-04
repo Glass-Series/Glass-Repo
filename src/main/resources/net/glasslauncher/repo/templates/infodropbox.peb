@@ -1,0 +1,19 @@
+{% extends "base.peb" %}
+
+{% block content %}
+    {% if noback %}
+    <p><a class="btn btn-secondary rounded-lg" href="/">Home</a></p>
+    {% else %}
+    <p><a class="btn btn-secondary rounded-lg" href="#" onmouseup="window.history.back();">Back</a></p>
+    {% endif %}
+    <h1>{% if title %}{{ title }}{% else %}Info{% endif %}</h1>
+    <div class="alert-{{ type }} rounded-lg p-1">{{ text | safe }}</div>
+
+    <form method="post" id="form">
+        <div class="form-group">
+            <label>DropBox OAuth code for mirroring onto your dropbox (OAuth code, which can be generated <a href="https://www.dropbox.com/oauth2/authorize?client_id=6bwdvm7ivldhj1m&response_type=code" target="_blank">here</a>)</label>
+            <input type="text" class="form-control" name="dropbox_auth" {% if site %}value="{{ site }}"{% endif %} autocomplete="off">
+        </div>
+        <button type="submit" class="btn btn-success">Mirror My Mod!</button>
+    </form>
+{% endblock %}

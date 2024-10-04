@@ -1,0 +1,96 @@
+{% extends "base.peb" %}
+
+{% block content %}
+<link href="/static/easymde/easymde.min.css" rel="stylesheet">
+<link href="/static/fontawesome/css/all.css" rel="stylesheet">
+<link href="/static/bootstrap-select/css/bootstrap-select.min.css" rel="stylesheet">
+{% include "widgets/array_input_handler.js.peb" %}
+<h1>Edit Your Mod</h1>
+<h5>Only UTF-8 characters are supported!</h5>
+<br>
+<form method="post" id="form">
+    <div class="form-group" id="name">
+        <br>
+        <label><b>Name</b></label>: <span>(Plain Text, <kbd>A-Z, a-z, 0-9, !, ?, ', ., _, -, spaces and commas</kbd> only, 4-30 character limit)</span>
+    <input class="form-control" type="text" name="name" value="{{ mod.name }}" maxlength="30" minlength="4">
+    </div>
+    <div class="form-group" id="shortDescription">
+        <br>
+        <label><b>Short Description</b></label>: <span>(Plain Text, 100 character limit)</span>
+        <input class="form-control" type="text" name="shortDescription" value="{{ mod.shortDescription }}" maxlength="100" minlength="10">
+    </div>
+    <div class="form-group" id="description">
+        <br>
+        <label><b>Description</b></label>: <span>(Markdown, 5000 character limit)</span>
+        <textarea id="markdowneditor" name="description" value="{{ mod.name }}">{{ mod.description }}</textarea>
+    </div>
+    <div class="form-group" id="authors">
+        <br>
+        {% include "widgets/input_array.peb" with { "id": "authors", "name": "Authors", "description": "(Discord IDs, <kbd>0-9</kbd> only, 18 character requirement)", "values": mod.authors } %}
+    </div>
+    <div class="form-group" id="minecraftVersions">
+        <br>
+        {% include "widgets/minecraft_choiced_array.peb" with { "id": "minecraftVersions", "name": "Minecraft Versions", "values": mod.minecraftVersions, "options": minecraft_versions } %}
+    </div>
+    <div class="form-group" id="dependencies">
+        <br>
+        {% include "widgets/mod_reference_array.peb" with { "id": "dependencies", "name": "Dependencies", "values": mod.dependencies } %}
+    </div>
+    <div class="form-group" id="optionalDependencies">
+        <br>
+        {% include "widgets/mod_reference_array.peb" with { "id": "optionalDependencies", "name": "Optional Dependencies", "values": mod.optionalDependencies } %}
+    </div>
+    <div class="form-group" id="incompatibleMods">
+        <br>
+        {% include "widgets/mod_reference_array.peb" with { "id": "incompatibleMods", "name": "Incompatible Mods", "values": mod.incompatibleMods } %}
+    </div>
+    <div class="form-group" id="tags">
+        <br>
+        {% include "widgets/input_array.peb" with { "id": "tags", "name": "Tags", "description": "(Plain Text, <kbd>a-z, 1-9 and _</kbd> only, 15 character limit, don't use minecraft versions)", "values": mod.tags } %}
+    </div>
+    <div class="form-group" id="categories">
+        <br>
+        {% include "widgets/choiced_array.peb" with { "id": "categories", "name": "Categories", "values": mod.categories, "options": categories } %}
+    </div>
+    <div class="form-group" id="types">
+        <br>
+        {% include "widgets/choiced_array.peb" with { "id": "types", "name": "Types", "values": mod.types, "options": types } %}
+    </div>
+    <div class="form-group" id="webhooks">
+        <br>
+        {% include "widgets/input_array.peb" with { "id": "webhooks", "name": "Webhooks", "description": "(Discord Webhook URLs, 150 character limit)", "values": mod.webhooks } %}
+    </div>
+    <button class="btn btn-success">Submit</button>
+</form>
+{% endblock %}
+
+{% block extrajs %}
+<script src="/static/easymde/easymde.min.js"></script>
+<script src="/static/downloader.js?ver={{ js_css_version }}"></script>
+<script src="/static/bootstrap-select/js/bootstrap-select.min.js"></script>
+<script>
+    markdowneditor = new EasyMDE({
+        element: document.getElementById("markdowneditor"),
+        forceSync: true,
+        status: ["autosave", "lines", "words", "cursor", {
+            className: "charcount",
+            defaultValue: function(el) {
+                el.innerHTML = document.getElementById("markdowneditor").value.length + " chars";
+            },
+            onUpdate: function(el) {
+                el.innerHTML = document.getElementById("markdowneditor").value.length + " chars";
+            }
+        }],
+        autosave: {
+            "enabled": true,
+            "uniqueId": "markdownEditMod_{{ mod.id }}"
+        },
+        autoDownloadFontAwesome: false,
+    });
+</script>
+<style>
+    .CodeMirror :not(.CodeMirror-fullscreen) {
+        max-height: 30rem
+    }
+</style>
+{% endblock %}

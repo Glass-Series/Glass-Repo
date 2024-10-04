@@ -1,0 +1,11 @@
+{% extends "base.peb" %}
+
+{% block content %}
+    <h1>Welcome to Glass Launcher CDN!</h1>
+    <p>This CDN is a file hosting service for things directly related to your uploaded mods or Minecraft.</p>
+    <h1>You may not upload anything that isnt directly related to your mods or Minecraft-related archives.</h1>
+    <p>You may link/embed/etc. images and other files you have uploaded into other websites.</p>
+    <p>
+        <a href="/cdn/files">Files</a><br>
+    </p>
+{% endblock %}

@@ -1,0 +1,8 @@
+<div>
+    <br style="font-size: 2px;">
+    <div class="input-group">
+        <input class="form-control" type="text" name="{{ id }}" value="{{ value }}" {% if disabled %}disabled{% endif %}>
+        <div class="input-group-append"></div>
+        <div class="input-group-text" onclick="this.parentElement.parentElement.remove()" style="background-color: #400001; border-color: #1f0000"><div class="fa fa-trash" style="color: red;"></div></div>
+    </div>
+</div>

@@ -1,0 +1,29 @@
+{% extends "base.peb" %}
+
+{% block content %}
+    <h1>Terms of Use (Rules)</h1>
+    <br>
+    <h3>Legal Stuff</h3>
+    <ol>
+        <li>Glass-Site reserves the right to remove or modify any content posted, alongside the right to ban users from using this site, at any time, for any reason.</li>
+        <li>Anything you upload must either have no license, be made by or modified by you under a license that allows redistribution, or have permission from the original author to upload.</li>
+        <li>When you upload anything to Glass-Site (glass-launcher.net), you are giving Glass-Site and calmilamsy permission to redistribute uploaded content in any way Glass-Site or calmilamsy decides.</li>
+        <li>When you log into this website, it will store your Discord ID, email, username, avatar ID, avatar and any content that you decide to upload while logged in.</li>
+    </ol>
+    <h3>Site Rules</h3>
+    <ol>
+        <li>No excessive swearing. Keep it PG-13.</li>
+        <li>Do not knowingly exploit bugs on the site. Either make a GitHub issue or send me (calmilamsy) an e-mail/PM.</li>
+        <li>No harassment or slander of another individual or group.</li>
+        <li>No hate speech of any kind.</li>
+        <li>No uploading of automated installers for mods. You may link to them in your mod description though.</li>
+    </ol>
+    <h3>Data Explanations:</h3>
+    <ol>
+        <li>Discord ID: Used inside site internals to track who you are.</li>
+        <li>Email: Used to communicate changes to your projects and your account, as I can't reliably a bot to send DMs to people on discord. May be used for other purposes in the future.</li>
+        <li>Username: So other people know who you are.</li>
+        <li>Avatar ID/Avatar: So people can visually identify you. The avatar is stored to save on API requests to discord, otherwise avatars would break every time someone changed it on discord.</li>
+        <li>Content: So I can host your mods.</li>
+    </ol>
+{% endblock %}

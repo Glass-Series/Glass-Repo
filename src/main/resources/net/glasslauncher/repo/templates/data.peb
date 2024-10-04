@@ -1,0 +1,24 @@
+{% extends "base.peb" %}
+
+{% block content %}
+    <h1>Data Policy</h1>
+    <p style="white-space: pre-line">
+This site will never track users via cookies or by any means other than server-side tracking. Server-side tracking will be kept as anonymous as possible.
+Cookies are currently used to track who you are logged in as, and if you have agreed to to data policy or not.
+
+This site will also never use ads either, provided I (calmilamsy) can keep paying for the site. I will put links and other things showing off random mods to allow smaller mod creators to get out there, though.
+
+Cookies are only used to keep login sessions and remember any choices you have made that are not account-side (such as agreeing to this site using cookies).
+    </p>
+    <h1>Compatibility and Performance Notes</h1>
+    <p style="white-space: pre-line">
+While I will try to avoid making JavaScript use mandatory, I will not bother trying to get anything other than unmodified Chomium/Chrome, Firefox and Edge to work on this site.
+
+This means if you use a JS blocker, you are out of luck if the site doesn't work. Just whitelist the site and continue your merry way, as the site will only use JS to make things look and feel better.
+
+I have precious little time as it is, so I'd rather not bother to cater for the <1% who use JS blockers or anything else that stops webpages from loading all their content.
+
+I would like to support everything and anything, but it just boils down to me not having the time nor patience to make industrial-grade websites.
+    </p>
+
+{% endblock %}

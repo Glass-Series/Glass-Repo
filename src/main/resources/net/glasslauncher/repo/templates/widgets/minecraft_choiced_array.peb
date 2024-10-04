@@ -1,0 +1,18 @@
+{# @pebvariable name="options" type="java.util.LinkedHashMap<String, java.util.LinkedHashMap<String, glasslauncher.net.repo.data.minecraft.VersionDetails>>" #}
+
+<script>
+$(document).ready(function() {
+    $("#{{ id }}_picker").selectpicker("val", [{% for value in values %}"{{ value }}"{% endfor %}]);
+});
+</script>
+<label><b>{{ name }}</b></label>
+<br>
+<select name="{{ id }}" id="{{ id }}_picker" multiple data-size="8" data-live-search="true">
+    {% for header in options.entrySet() %}
+    <optgroup label="{{ header.key }}">
+        {% for version in header.value %}
+        <option value="{{ version.id }}">{{ version.id }}</option>
+        {% endfor %}
+    </optgroup>
+    {% endfor %}
+</select>

@@ -1,0 +1,108 @@
+{% extends "base.peb" %}
+{% import "widgets/tables.peb" as Tables %}
+
+{% block content %}
+    <p class="btn-group"><a class="btn btn-secondary" href="/repo/mods">Back</a>{% if is_author %}<a class="btn btn-success" href="/repo/mod/{{ mod_obj.id }}/edit">Edit</a><a class="btn btn-outline-success" href="/repo/createmodversion?mod={{ mod_obj.id }}">Create a Version</a>{% endif %}</p>
+    <h1>{{ mod_obj.name }} <sup class="version" >Version {{ latest_version.version }}</sup></h1>
+    <p style="color: gray">Uploaded at {{ mod_obj.time }}.</p>
+    <p style="color: gray">Downloaded {{ mod_obj.downloads }} times total.</p>
+    {% if latest_version is not null %}
+        <h3>Latest version:</h3>
+        <div class="row" style="margin-left: 0">
+            {% if latest_version.hasClient.value %}
+                <div style="min-width: 163px; margin-right: 40px">
+                    <h4>Client</h4>
+                    <div class="btn-group">
+                        <a class="btn btn-success" href="/repo/mod/{{ mod_obj.id }}/versions/{{ latest_version.version }}/download">Download {{ latest_version.filetype.upper() }}</a>
+                    </div>
+                </div>
+            {% endif %}
+            {% if latest_version.hasServer.value or latest_version.isClientServer.value %}
+                <div style="min-width: 163px; margin-right: 40px">
+                    <h4>Server</h4>
+                    <div class="btn-group">
+                        <a class="btn btn-success" href="/repo/mod/{{ mod_obj.id }}/versions/{{ latest_version.version }}/download?side=server">Download {{ latest_version.filetype.upper() }}</a>
+                    </div>
+                </div>
+            {% endif %}
+            {% if latest_version.hasBukkit.value %}
+                <div style="min-width: 163px">
+                    <h4>Bukkit</h4>
+                    <div class="btn-group">
+                        <a class="btn btn-success" href="/repo/mod/{{ mod_obj.id }}/versions/{{ latest_version.version }}/download?side=bukkit">Download {{ latest_version.filetype.upper() }}</a>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    {% endif %}
+    <br>
+    <ul class="nav nav-tabs" id="myTab" role="tablist" style="margin-bottom: 20px">
+        <li class="nav-item">
+            <a class="nav-link active" id="info-tab" data-toggle="tab" href="#info" role="tab" aria-controls="info" aria-selected="true">Info</a>
+        </li>
+        {% if mod_obj.incompatibleMods.length() != 0 %}
+            <li class="nav-item">
+                <a class="nav-link" id="incompatible_mods-tab" data-toggle="tab" href="#incompatible_mods" role="tab" aria-controls="incompatible_mods" aria-selected="false">Incompatible Mods</a>
+            </li>
+        {% endif %}
+        {% if mod_obj.dependencies.length() != 0 %}
+            <li class="nav-item">
+                <a class="nav-link" id="dependencies-tab" data-toggle="tab" href="#dependencies" role="tab" aria-controls="dependencies" aria-selected="false">Dependencies</a>
+            </li>
+        {% endif %}
+        {% if mod_obj.optionalDependencies.length() != 0 %}
+            <li class="nav-item">
+                <a class="nav-link" id="optional_dependencies-tab" data-toggle="tab" href="#optional_dependencies" role="tab" aria-controls="optional_dependencies" aria-selected="false">Optional Dependencies</a>
+            </li>
+        {% endif %}
+        {% if mod_obj.editedClasses.length() != 0 %}
+            <li class="nav-item">
+                <a class="nav-link" id="edited_classes-tab" data-toggle="tab" href="#edited_classes" role="tab" aria-controls="edited_classes" aria-selected="false">Edited Classes</a>
+            </li>
+        {% endif %}
+        <li class="nav-item">
+            <a class="nav-link" id="versions-tab" data-toggle="tab" href="#versions" role="tab" aria-controls="versions" aria-selected="false">Versions</a>
+        </li>
+    </ul>
+    <div class="tab-content" id="tabcontent">
+        <div class="tab-pane fade show active" role="tabpanel" aria-labelledby="info-tab" id="info">
+            {% if is_author %}<a class="btn btn-success" href="/repo/mod/{{ mod_obj.id }}/edit?editing=Description">Edit</a>{% endif %}
+            <div>{{ mod_desc | raw }}</div>
+            <p>
+                {% for author in mod_obj.authorObjects %}
+                    {% include "widgets/author.peb" with { "author": author } %}
+                {% endfor %}
+            </p>
+        </div>
+        <div class="tab-pane fade" role="tabpanel" aria-labelledby="incompatible_mods-tab" id="incompatible_mods">
+            {% if is_author %}<a class="btn btn-success" href="/repo/mod/{{ mod_obj.id }}/edit?editing=Incompatible Mods">Edit</a>{% endif %}
+            {{ Tables.mod_link_table("Incompatible Mods", mod_obj.incompatibleMods) }}
+        </div>
+        <div class="tab-pane fade" role="tabpanel" aria-labelledby="dependencies-tab" id="dependencies">
+            {% if is_author %}<a class="btn btn-success" href="/repo/mod/{{ mod_obj.id }}/edit?editing=Dependencies">Edit</a>{% endif %}
+            {{ Tables.mod_link_table("Dependencies", mod_obj.dependencies) }}
+        </div>
+        <div class="tab-pane fade" role="tabpanel" aria-labelledby="optional_dependencies-tab" id="optional_dependencies">
+            {% if is_author %}<a class="btn btn-success" href="/repo/mod/{{ mod_obj.id }}/edit?editing=Optional Dependencies">Edit</a>{% endif %}
+            {{ Tables.mod_link_table("Optional Dependencies", mod_obj.optionalDependencies) }}
+        </div>
+        <div class="tab-pane fade" role="tabpanel" aria-labelledby="edited_classes-tab" id="edited_classes">
+            {% if is_author %}<a class="btn btn-success" href="/repo/mod/{{ mod_obj.id }}/edit?editing=Edited Classes">Edit</a>{% endif %}
+            {{ Tables.plain_table("Edited Classes", mod_obj.editedClasses) }}
+        </div>
+        <div class="tab-pane fade" role="tabpanel" aria-labelledby="versions-tab" id="versions">
+            <table class="table table-dark table-striped">
+                <thead>
+                    <tr>
+                        <th scope="col">Version</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for version in mod_obj.getVersions() %}
+                        <tr class="clickabletable" onmouseup="location.assign('/repo/mod/{{ mod_obj.id }}/versions/{{ version.version }}')"><td>{{ version.version }}</td></tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}

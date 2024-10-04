@@ -1,0 +1,13 @@
+{% extends "base.peb" %}
+
+{% block content %}
+    <p><a class="btn btn-secondary rounded-lg" href="/repo/modpacks">Back</a></p>
+    <h1>{{ modpack_obj.name }} <sup class="version" >Version {{ modpack_obj.version }}</sup></h1>
+    <p><a class="btn btn-green" href="/repo/modpack/{{ modpack_obj.id }}/versions">Versions</a></p>
+    <div>{{ modpack_desc | safe }}</div>
+    <p>
+        {% for author in authors %}
+            <a class="btn btn-secondary btn-sm rounded-lg author" {% if author.site %}href="{{ author.site }}" target="_blank"{% endif %}>{{ author.username }}</a>
+        {% endfor %}
+    </p>
+{% endblock %}

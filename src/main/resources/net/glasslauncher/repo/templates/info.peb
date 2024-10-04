@@ -1,0 +1,11 @@
+{% extends "base.peb" %}
+
+{% block content %}
+    {% if noback %}
+    <p><a class="btn btn-secondary rounded-lg" href="/">Home</a></p>
+    {% else %}
+    <p><a class="btn btn-secondary rounded-lg" href="#" onmouseup="window.history.back();">Back</a></p>
+    {% endif %}
+    <h1>{% if title %}{{ title }}{% else %}Info{% endif %}</h1>
+    <div class="alert-{{ type }} rounded-lg p-1">{{ text | raw }}</div>
+{% endblock %}

@@ -1,0 +1,11 @@
+{% extends "base.peb" %}
+
+{% block content %}
+    <h1>Welcome to Glass Launcher Repo!</h1>
+    <p>This repo is a place where you can upload mods, modpacks and plugins.</p>
+    <h1>The repo is heavy WIP, and is recommended to link to a mod page instead of a version.</h1>
+    <p>
+        <a href="/repo/modpacks">Modpack Index</a><br>
+        <a href="/repo/mods">Mod Index</a>
+    </p>
+{% endblock %}

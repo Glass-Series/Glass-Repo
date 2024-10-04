@@ -1,0 +1,6 @@
+{% extends "../base.peb" %}
+
+{% block content %}
+    <h1>Forbidden</h1>
+    <p>You do not have sufficient permissions to access this file.</p>
+{% endblock %}

@@ -1,0 +1,12 @@
+<script>
+$(document).ready(function() {
+    $("#{{ id }}_picker").selectpicker("val", [{% for value in values %}"{{ value }}"{% endfor %}]);
+});
+</script>
+<label><b>{{ name }}</b></label>
+<br>
+<select name="{{ id }}" id="{{ id }}_picker" multiple data-size="8" data-live-search="true">
+    {% for option in options %}
+    <option value="{{ option }}">{{ option }}</option>
+    {% endfor %}
+</select>

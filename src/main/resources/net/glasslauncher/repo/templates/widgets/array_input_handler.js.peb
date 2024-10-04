@@ -1,0 +1,9 @@
+<script>
+function addArrayElement(parent, id, disabled) {
+    parent.insertAdjacentHTML("beforeend", `{% include "widgets/array_element.peb" with { "id": "%id%" } %}`.replace("%id%", id))
+}
+
+function addModArrayElement(parent, id) {
+    parent.insertAdjacentHTML("beforeend", `{% include "widgets/mod_array_element.peb" with { "id": "%id%" } %}`.replace("%id%", id).replace("%id%", id))
+}
+</script>

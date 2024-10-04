@@ -1,0 +1,68 @@
+{% extends "base.peb" %}
+
+{% block content %}
+    <p class="btn-group">
+        <a class="btn btn-secondary" href="/repo/mod/{{ mod_obj.id }}">Back</a>
+        {% if is_author %}
+            <a class="btn btn-success"
+               href="/repo/mod/{{ mod_obj.id }}/versions/{{ version_obj.version }}/edit">Edit</a>
+            <button class="btn btn-danger" type="button" data-toggle="modal" data-target="#AREYOUREALLYSURE">Delete</button>
+        {% endif %}
+    </p>
+
+    <div class="modal fade" id="AREYOUREALLYSURE" tabindex="-1" role="dialog" aria-labelledby="AREYOUREALLYSURE" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content modalcontainer">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">ARE YOU REALLY REALLY SURE?</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    YOU ARE ABOUT TO DELETE YOUR MOD VERSION.
+                    <br>
+                    DO YOU UNDERSTAND?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    <a class="btn btn-danger" href="/repo/mod/{{ mod_obj.id }}/versions/{{ version_obj.version }}/delete" onclick="this.textContent = 'Mod Version Deleted'">Delete</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <p style="color: gray">Downloaded {{ version_obj.downloadCount }} times.</p>
+    <p style="color: gray">Uploaded at {{ version_obj.time }}.</p>
+    <p>This mod is a {{ version_obj.type }} mod.</p>
+    <h1>{{ mod_obj.name }} <sup class="version">Version {{ version_obj.version }}</sup></h1>
+    <br>
+    <div class="row" style="margin: 0;">
+        {% if version_obj.hasClient.value %}
+            <div style="min-width: 163px; margin-right: 40px">
+                <h4>Client</h4>
+                <div class="btn-group">
+                    <a class="btn btn-success" href="/repo/mod/{{ mod_obj.id }}/versions/{{ version_obj.version }}/download">Download {{ version_obj.filetype.upper() }}</a>
+                </div>
+            </div>
+        {% endif %}
+        {% if version_obj.hasServer.value or version_obj.isClientServer.value %}
+            <div style="min-width: 163px; margin-right: 40px">
+                <h4>Server</h4>
+                <div class="btn-group">
+                    <a class="btn btn-success" href="/repo/mod/{{ mod_obj.id }}/versions/{{ version_obj.version }}/download?side=server">Download {{ version_obj.filetype.upper() }}</a>
+                </div>
+            </div>
+        {% endif %}
+        {% if version_obj.hasBukkit.value %}
+            <div style="min-width: 163px">
+                <h4>Bukkit</h4>
+                <div class="btn-group">
+                    <a class="btn btn-success" href="/repo/mod/{{ mod_obj.id }}/versions/{{ version_obj.version }}/download?side=bukkit">Download {{ version_obj.filetype.upper() }}</a>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+    <br>
+    <div>{{ version_obj.renderedDescription | raw }}</div>
+{% endblock %}

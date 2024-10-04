@@ -1,0 +1,13 @@
+{% extends "base.peb" %}
+
+{% block content %}
+    <p><a class="btn btn-secondary rounded-lg" href="/repo/modpack/{{ modpack_obj.id }}">Back</a></p>
+    {% if version_obj.format == "multimc" %}
+        <p>This modpack is in MultiMC format.</p>
+    {% else %}
+        <p>This modpack is in Glass Launcher format.</p>
+    {% endif %}
+    <h1>{{ modpack_obj.name }} <sup class="version" >Version {{ version_obj.version }}</sup></h1>
+    <p class="btn-group"><a class="btn btn-green" href="/repo/modpack/{{ modpack_obj.id }}/versions/{{ version_obj.version }}/download">Download</a></p>
+    <div>{{ version_desc | safe }}</div>
+{% endblock %}

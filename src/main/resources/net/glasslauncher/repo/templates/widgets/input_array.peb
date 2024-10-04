@@ -1,0 +1,8 @@
+<label><b>{{ name }}</b></label> <span>{{ description | raw }}</span>
+<br>
+<div class="btn btn-success" onclick="addArrayElement(this.parentElement.lastElementChild, '{{ id }}')">Add</div>
+<div class="array_content">
+    {% for value in values %}
+    {% include "widgets/array_element.peb" with { "id": id, "value": value } %}
+    {% endfor %}
+</div>

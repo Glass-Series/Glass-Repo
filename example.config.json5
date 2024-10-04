@@ -1,0 +1,14 @@
+{
+  // The ID of your oauth application.
+  "dc_id": 1337,
+  // The oauth secret.
+  "dc_scrt": "yoursecrethere",
+  // The master webhook URL. Any time a webhook request is sent, it will be sent here too.
+  "dc_mwhurl": "yourwebhookhere",
+
+  // The fernet key. See the fernet docs on how to generate one.
+  "fernet": "generateme",
+
+  // The mail provider password.
+  "mail_pass": "setme"
+}

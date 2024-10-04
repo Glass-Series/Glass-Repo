@@ -1,0 +1,7 @@
+{% extends "base.peb" %}
+
+{% block content %}
+    <h1>Disabled for now!</h1>
+    <p>With the mod repo being reworked, modpacks are now completely broken on the site.</p>
+    <p>I am (very slowly) working on a solution, but seeing as there are like 4 modpacks in the whole of beta that people use, I don't see much of a reason to slow down development to make it work at the same time as the mod repo.</p>
+{% endblock %}

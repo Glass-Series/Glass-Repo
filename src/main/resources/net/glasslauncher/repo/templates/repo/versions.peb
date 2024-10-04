@@ -1,0 +1,22 @@
+{% extends "base.peb" %}
+
+{% block content %}
+    <p><a class="btn btn-secondary rounded-lg" href="/repo/mod/{{ modpack_obj.id }}">Back</a></p>
+    <h1>Version History for {{ modpack_obj.name }}</h1>
+    <table class="table table-dark table-striped">
+        <thead>
+            <tr>
+                <th colspan="2"><input style="width: 100%; background-color: #454d55; border-color: #454d55;" class="form-control searchabletableinput" type="text" onkeyup="runSearch(this.parentElement.parentElement.parentElement.parentElement)" placeholder="Search for names.."></th>
+            </tr>
+            <tr>
+                <th scope="col">Version</th>
+                <th scope="col">Short Description</th>
+            </tr>
+        </thead>
+        <tbody class="searchabletable">
+            {% for version in modpack_obj.versions %}
+            <a href="/repo/mods/{{ modpack_obj.id }}/versions/{{ version.version }}"><tr><td>{{ version.version }}</td><td>{{ version.shortDesc }}</td></tr></a>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

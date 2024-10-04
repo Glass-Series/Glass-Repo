@@ -1,0 +1,134 @@
+{% extends "base.peb" %}
+
+{% block content %}
+    <link href="/static/fontawesome/css/all.css" rel="stylesheet">
+    <link href="/static/bootstrap-select/css/bootstrap-select.min.css" rel="stylesheet">
+    <h1>Manage Archives</h1>
+    <table class="table table-dark">
+        <thead>
+            <tr>
+                <th colspan="6">
+                    <div class="input-group">
+                        <input style="background-color: rgba(32, 23, 16, 0.6); border-color: rgba(22, 13, 16, 0.6); color: darkgray" class="form-control searchabletableinput" type="text" id="searchbar" placeholder="Search for names..">
+                        <div class="input-group-append"><button type="button" class="form-control btn btn-success" id="searchbutton" onclick="runSearch(document)">Search</button></div>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <label class="col-3"><input type="checkbox" id="isRegex"/> Use regex</label>
+                        <label class="col-3" title="Make sure search results match ALL your input values"><input type="checkbox" id="isAnd" checked/> AND</label>
+                    </div>
+                    <div class="container">
+                        <div style="display: none">
+                            <div class="col-sm" id="types_parent_div"></div>
+                            <div class="col-sm" id="minecraft_versions_parent_div"></div>
+                            <div class="col-sm" id="categories_parent_div"></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm" id="tags_parent_div"></div>
+                        </div>
+                    </div>
+                </th>
+            </tr>
+            <tr>
+                <th scope="col" class="clickabletable" onclick="sortTable('name')">Sort Mod Names Alphabetically</th>
+                <th scope="col" class="clickabletable" onclick="sortTable('downloads', false)">Sort by Downloads</th>
+                <th scope="col" class="clickabletable" onclick="sortTable('!time', false)">Sort by Recently Uploaded</th>
+            </tr>
+        </thead>
+    </table>
+    <div class="searchabletable">
+        {% for file in files %}
+            <div class="modcontainer margin-bottom">
+                <div class="linkcell margin-bottom"><a href="/cdn/file/{{ file.author.id }}/{{ file.name }}" class="clickabletable tablelink smallpadding"><h4 class="nomargin name">{{ file.name }}</h4></a></div>
+                <div class="row nomargin">
+                    <div class="Tags" style="margin-left: 10px">
+                        <span style="font-size: 1.15rem; margin-right: 5px;">Tags:</span>
+                        {% for tag in file.tags %}
+                            <button title="Add to search" class="btn btn-tn btn-secondary marginbottom5" onclick="addElement($('#Tags_div')[0], '', 'Tags', this)" value="{{ tag }}">{{ tag }}</button>
+                        {% endfor %}
+                    </div>
+
+                    <div style="margin-left: auto; margin-right: 5px">
+                        <div class="row" style="margin:0">
+                            <sub class="version downloads" style="font-size: .75rem; margin-right: 10px"> Downloads: {{ file.downloads }}</sub>
+                            <sub class="version" style="font-size: .75rem; margin-right: 10px;">|</sub>
+                            <sub class="version time" style="font-size: .75rem; margin-right: 10px;" title="{{ file.timestamp }}"> Created: {{ file.time }}</sub>
+                            <a class="btn btn-secondary btn-sm rounded-lg author" {% if file.author.site %}href="{{ file.author.site }}" target="_blank"{% endif %}>
+                                <img style="margin-left: -5px; margin-top: -5px" height="21" width="21" src="{{ file.author.avatar }}"> {{ file.author.username }}
+                            </a>
+                        </div>
+                    </div>
+                    <button type="button" class="btn btn-danger" style="margin-left: 5px; margin-right: 5px" data-toggle="modal" data-target="#AREYOUREALLYSURE{{ file.name|underscore }}">Delete</button>
+
+                    <div class="modal fade" id="AREYOUREALLYSURE{{ file.name|underscore }}" tabindex="-1" role="dialog" aria-labelledby="AREYOUREALLYSURE" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content modalcontainer">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">ARE YOU REALLY REALLY SURE?</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    YOU ARE ABOUT TO DELETE {{ file.name }}.
+                                    <br>
+                                    DO YOU UNDERSTAND?
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                                    <a class="btn btn-danger" href="/cdn/file/{{ file.name }}/delete" onclick="this.textContent = 'Mod Version Deleted'">Delete</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel autocollapse">
+                    <div class="panel-heading clickable clickabletable smallpadding">
+                        <p class="panel-title nomargin">
+                            Extra Info
+                                <i class="fa fa-chevron-down" style="color: rgba(255,255,255,.5); margin-left: 4px;"></i>
+                        </p>
+                    </div>
+                    <div class="panel-body smallpadding">
+                        <div class="row nomargin">
+                            <div class="col-12 modsection">
+                                <h5 style="text-align: center">Description</h5>
+                                <div>
+                                    {{ descriptions[file.author.id+file.name] | safe }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}
+
+{% block extrajs %}
+    <script src="/static/bootstrap-select/js/bootstrap-select.min.js"></script>
+    <script src="/static/search.js?ver={{ js_css_version }}"></script>
+    <script>
+        var isComplexSearch = true;
+        $("#searchbar")[0].addEventListener("keyup", (event) => {
+            if (event.keyCode === 13) {
+                event.preventDefault();
+                $("#searchbutton")[0].click();
+            }
+        });
+
+        $(document).on("click", ".panel div.clickable", function (e) {
+            toggleDropdown($(this))
+        });
+
+        $(document).ready(function(e){
+            setup();
+            sortTable("name");
+            let $classy = '.autocollapse';
+
+            let $found = $($classy);
+            $found.find('.panel-body').hide();
+            $found.removeClass($classy);
+        });
+    </script>
+{% endblock %}

@@ -1,0 +1,33 @@
+{% macro mod_link_table(name, mods) %}
+<div class="table table-dark table-striped">
+    <div class="row table-head">
+        <div class="col">{{ name }}</div>
+    </div>
+    <div class="table-divider"></div>
+    <div class="table-body">
+            {% for mod in mods %}
+            <div class="row">
+                {% if mod.url %}<a href="{{ mod.url }}">{% endif %}
+                <div class="col clickabletable">{{ mod.name }}</div>
+                {% if mod.url %}</a>{% endif %}
+            </div>
+            {% endfor %}
+    </div>
+</div>
+{% endmacro %}
+
+{% macro plain_table(name, entries) %}
+<div class="table table-dark table-striped">
+    <div class="row table-head">
+        <div class="col">{{ name }}</div>
+    </div>
+    <div class="table-divider"></div>
+    <div class="table-body">
+            {% for entry in entries %}
+            <div class="row">
+                <div class="col">{{ entry }}</div>
+            </div>
+            {% endfor %}
+    </div>
+</div>
+{% endmacro %}

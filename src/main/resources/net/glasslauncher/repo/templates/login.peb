@@ -1,0 +1,10 @@
+{% extends "base.peb" %}
+
+{% block content %}
+    <h1>Login</h1>
+    <p><a class="btn btn-secondary loginbutton" href="{{ oauth_url }}">Login with <span class="discordimage"></span></a></p>
+    <p>By logging in, <a href="/terms">you agree to the terms of service (site rules)</a>.</p>
+    {% if error %}
+        <div class="alert-danger rounded-lg p-1">Could not login with Discord: <div style="color: #1b1e21;" class="d-inline">{{ error }}.</div></div>
+    {% endif %}
+{% endblock %}

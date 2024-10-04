@@ -1,0 +1,6 @@
+{% extends "../base.peb" %}
+
+{% block content %}
+    <h1>File not found!</h1>
+    <p>The file you tried to access could not be found.</p>
+{% endblock %}

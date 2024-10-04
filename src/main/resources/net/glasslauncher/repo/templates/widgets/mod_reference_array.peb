@@ -1,0 +1,22 @@
+{# Debating on if this is worth doing. #}
+{# @pebvariable name="values" type="glasslauncher.net.repo.data.ModReference[]" #}
+{# @pebvariable name="id" type="String" #}
+{# @pebvariable name="name" type="String" #}
+{# @pebvariable name="description" type="String" #}
+
+<label><b>{{ name }}</b></label> <span>{{ description | raw }}</span>
+<br>
+<div class="btn btn-success" onclick="addModArrayElement(this.parentElement.lastElementChild, '{{ id }}')">Add</div>
+<div class="array_content">
+    {% for value in values %}
+    <div>
+        <br style="font-size: 2px;">
+        <div class="input-group">
+            <input class="form-control" type="text" name="{{ id }}_name" value="{{ value.name }}" placeholder="The mod's name">
+            <input class="form-control" type="text" name="{{ id }}_url" value="{{ value.url }}" placeholder="The mod's URL">
+            <div class="input-group-append"></div>
+            <div class="input-group-text" onclick="this.parentElement.parentElement.remove()" style="background-color: #400001; border-color: #1f0000"><div class="fa fa-trash" style="color: red;"></div></div>
+        </div>
+    </div>
+    {% endfor %}
+</div>

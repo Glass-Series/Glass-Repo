@@ -1,0 +1,123 @@
+<html lang="en">
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="{% if title %}{{ title }} - Glass Repo{% else %}Welcome to Glass Repo</title>{% endif %}">
+    <meta name="twitter:description" content="{{ description }}">
+
+    {% if title %}
+        <title>{{ title }} - Glass Repo</title>
+    {% else %}
+        <title>Welcome to Glass Repo</title>
+    {% endif %}
+
+    <link href="/static/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/static/fontawesome/css/all.css" rel="stylesheet">
+    <link href="/static/css.css?version={{ js_css_version }}" rel="stylesheet">
+    <link href="/static/img/glass.png" rel="icon">
+
+</head>
+
+<body>
+<script src="/static/vendor/jquery/jquery.min.js"></script>
+<!-- Navigation -->
+<div class="navbar-image fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand" href="/"><img src="/static/img/glass.png" width="40" height="40"> {% if title %}
+                {{ title }} {% else %} Home {% endif %}</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
+                    aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/">Home</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a id="dropdownInfo" class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" aria-haspopup="true" aria-expanded="false">Info</a>
+                        <div class="dropdown-menu dropdown-menu-right bg-dark" data-container="body" aria-labelledby="dropdownInfo">
+                            <a class="dropdown-item" href="https://glass-launcher.net">Launcher</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="https://modification-station.net" target="_blank">Modification Station Website</a>
+                            <a class="dropdown-item" href="https://wiki.modification-station.net" target="_blank">Modification Station Wiki</a>
+                            <a class="dropdown-item" href="https://discord.gg/8Qky5XY" target="_blank">Modification Station Discord</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="/contact">Contact</a>
+                            <a class="dropdown-item" href="/data">Data Policy</a>
+                            <a class="dropdown-item" href="/terms">Terms</a>
+                        </div>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a id="dropdownRepo" class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" aria-haspopup="true" aria-expanded="false">Repo</a>
+                        <div class="dropdown-menu dropdown-menu-right bg-dark" data-container="body" aria-labelledby="dropdownRepo">
+                            <a class="dropdown-item" href="/repo">Home</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="/repo/modpacks">Modpacks</a>
+                            <a class="dropdown-item" href="/repo/mods">Mods</a>
+                            <a class="dropdown-item" href="/cdn">CDN</a>
+                        </div>
+                    </li>
+                    {% if usersession != null  %}
+                        <li class="nav-item dropdown">
+                            <a id="dropdownUser" class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" aria-haspopup="true" aria-expanded="false">{{ usersession.username }}</a>
+                            <div class="dropdown-menu dropdown-menu-right bg-dark" data-container="body" aria-labelledby="dropdownUser">
+                                <a class="dropdown-item" href="/logout">Logout</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="/profile">Profile</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="/repo/createmod">Create a Mod</a>
+                                <a class="dropdown-item" href="/cdn/upload">Upload to CDN</a>
+                            </div>
+                        </li>
+                    {% else %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="/login">Login</a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </nav>
+</div>
+<span style="cursor: pointer; width: 24px; height: 24px" onclick="hideNav()" class="fixed-top"><i id="hider" class="fa fa-sort-up" style="font-size: 32px; color: rgba(255,255,255,.5); margin-left: 4px;"></i></span>
+
+<div class="container rounded-lg maincontainer">
+    {% block content %}{% endblock %}
+</div>
+
+<div id="cookie_directive_container" class="navbar-image fixed-bottom" style="display: none">
+    <nav class="navbar navbar-dark navbar-image">
+
+        <div class="container">
+            <div class="navbar-inner navbar-content-center" id="cookie_accept" style="width: 100%;">
+
+                <a href="#" class="btn btn-default float-right">Close</a>
+                <p class="text-muted credit" style="margin-top: 16px;">
+                    By using this website you are consenting the use of cookies in accordance with it's <a href="/data" target="_blank">data policy</a>.
+                </p>
+            </div>
+        </div>
+
+    </nav>
+</div>
+
+<div id="footer" class="navbar-image">
+    ©Glass Series, 2024. <a href="https://github.com/Glass-Series/Glass-Repo" style="color: rgb(161, 161, 161)">Source code is shared under the AGPLv3 license.</a>
+    <div class="version">v{{ site_version }}</div>
+</div>
+
+{% block prejs %}{% endblock %}
+
+<script src="/static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="/static/cookie.js?ver={{ js_css_version }}"></script>
+
+{% block extrajs %}{% endblock %}
+
+</body>
+</html>

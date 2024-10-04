@@ -1,0 +1,18 @@
+{% extends "base.peb" %}
+
+{% block content %}
+    <h2>Edit Profile</h2>
+    <sup style="color: grey">todo: Allow setting of a password, and changing of email.</sup>
+    <br><br>
+    <form method="post" id="form">
+        <div class="form-group">
+            <label>User Site (URL, opens in new tab when someone clicks on your name in a mod/modpack page)</label>
+            <input type="text" class="form-control" name="site" {% if site %}value="{{ site }}"{% endif %}>
+        </div>
+
+        <button type="submit" class="btn btn-success">Submit</button>
+    </form>
+    <br>
+    <h2>CDN Management</h2>
+    <a class="btn btn-success" href="/cdn/manage">Manage CDN</a>
+{% endblock %}

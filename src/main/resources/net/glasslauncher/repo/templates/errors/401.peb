@@ -1,0 +1,6 @@
+{% extends "../base.peb" %}
+
+{% block content %}
+    <h1>Unauthorized</h1>
+    <p>The file you tried to access requires you to be logged in.</p>
+{% endblock %}

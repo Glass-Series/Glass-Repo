@@ -1,0 +1,79 @@
+{% extends "base.peb" %}
+
+{% block content %}
+    <link href="/static/easymde/easymde.min.css" rel="stylesheet">
+    <link href="/static/fontawesome/css/all.css" rel="stylesheet">
+    <link href="/static/bootstrap-select/css/bootstrap-select.min.css" rel="stylesheet">
+    <h1>Upload to CDN</h1>
+    <h5>Only UTF-8 characters are supported!</h5>
+    <br>
+    <form method="post" enctype=multipart/form-data>
+        <div class="form-group">
+            <label><b>File Name</b> (Plain text, <kbd>A-Z, a-z, 0-9, !, ?, ', ., _, -, spaces and commas</kbd> only, 4-30 character limit)</label>
+            <input type="text" class="form-control" name="name">
+        </div>
+        <div class="form-group">
+            <label id="version_files"><b>Version Files</b> (ZIP, JPEG, PNG and GIF files only, 200mb file size limit)</label><br>
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">File to Upload</span>
+                </div>
+                <div class="custom-file">
+                    <input type="file" id="cdn_file" name="cdn_file" accept=".zip,.png,.jpeg,.jpg" class="custom-file-input d-inline" aria-describedby="cdn_files">
+                    <label class="custom-file-label" for="cdn_file">Choose file...</label>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label><b>File Type</b></label>
+            <select name="type" id="selectpicker" class="form-control">
+                {% for type in types %}
+                    <option>{{ type }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="form-group">
+            <label><b>File Tags</b> (Plain text, <kbd>a-z, 0-9 and _</kbd> only for each tag, comma separated (may have spaces), 15 character limit)</label>
+            <input type="text" class="form-control" name="tags">
+        </div>
+        <div class="form-group">
+            <label><b>File Description</b> (Optional, markdown, 5000 character limit) <a class="btn btn-secondary btn-sm rounded-lg author" href="#" onmouseup="downloadtext(markdowneditor.value(), 'cdn_upload_markdown.md')">Download Markdown</a></label>
+            <textarea class="form-control" name="description" id="markdowneditor"></textarea>
+        </div>
+        <div class="form-group">
+            <label><h3>Save your markdown before submitting in case something goes wrong!</h3></label>
+            <input type="submit" class="form-control">
+        </div>
+    </form>
+    <link href="/static/css.css" rel="stylesheet">
+{% endblock %}
+
+{% block extrajs %}
+    <script src="/static/easymde/easymde.min.js"></script>
+    <script src="/static/downloader.js?ver={{ js_css_version }}"></script>
+    <script src="/static/bootstrap-select/js/bootstrap-select.min.js"></script>
+    <script>
+        const markdowneditor = new EasyMDE({
+            element: document.getElementById("markdowneditor"),
+            forceSync: true,
+            autosave: {
+                enabled: true,
+                uniqueId: "cdnupload",
+                delay: 1000,
+            },
+            status: ["autosave", "lines", "words", "cursor", {
+                className: "charcount",
+                defaultValue: function(el) {
+                    el.innerHTML = document.getElementById("markdowneditor").value.length + " chars";
+                },
+                onUpdate: function(el) {
+                    el.innerHTML = document.getElementById("markdowneditor").value.length + " chars";
+                }
+            }]
+        });
+
+        $('.custom-file-input').on('change', function(event) {
+            $(this).next('.custom-file-label').text(event.target.files[0].name);
+        })
+    </script>
+{% endblock %}

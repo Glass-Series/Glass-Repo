@@ -1,0 +1,63 @@
+{% extends "base.peb" %}
+
+{% block content %}
+    <link href="/static/fontawesome/css/all.css" rel="stylesheet">
+    <link href="/static/bootstrap-select/css/bootstrap-select.min.css" rel="stylesheet">
+    <h1>List of Mods</h1>
+    <table class="table table-dark">
+        <thead>
+            <tr>
+                <th colspan="6">
+                    <div class="input-group">
+                        <input style="background-color: rgba(32, 23, 16, 0.6); border-color: rgba(22, 13, 16, 0.6); color: darkgray" class="form-control searchabletableinput" type="text" id="searchbar" placeholder="Search for names..">
+                        <div class="input-group-append"><button type="button" class="form-control btn btn-success" id="searchbutton" onclick="runSearch(document)">Search</button></div>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <label class="col-3"><input type="checkbox" id="isRegex"/> Use regex</label>
+                        <label class="col-3" title="Make sure search results match ALL your input values"><input type="checkbox" id="isAnd" checked/> AND</label>
+                    </div>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-sm" id="types_parent_div"></div>
+                            <div class="col-sm" id="minecraft_versions_parent_div"></div>
+                            <div class="col-sm" id="categories_parent_div"></div>
+                            <div class="col-sm" id="tags_parent_div"></div>
+                        </div>
+                    </div>
+                </th>
+            </tr>
+            <tr>
+                <th scope="col" class="clickabletable" onclick="sortTable('name')">Sort Mod Names Alphabetically</th>
+                <th scope="col" class="clickabletable" onclick="sortTable('downloads', false)">Sort by Downloads</th>
+                <th scope="col" class="clickabletable" onclick="sortTable('!versiontime', false)">Sort by Recently Updated</th>
+                <th scope="col" class="clickabletable" onclick="sortTable('!time', false)">Sort by Recently Created</th>
+            </tr>
+        </thead>
+    </table>
+    <div class="searchabletable">
+        {% for mod in modpack_list %}
+            {% include "widgets/mod_entry.peb" %}
+        {% endfor %}
+    </div>
+{% endblock %}
+
+{% block extrajs %}
+    <script src="/static/bootstrap-select/js/bootstrap-select.min.js"></script>
+{#    <script src="/static/search.js?ver={{ js_css_version }}"></script>#}
+    <script src="/static/mod_entries.js?ver={{ js_css_version }}"></script>
+    <script>
+        var isComplexSearch = true;
+        setup();
+        $("#searchbar")[0].addEventListener("keyup", (event) => {
+            if (event.keyCode === 13) {
+                event.preventDefault();
+                $("#searchbutton")[0].click();
+            }
+        });
+
+        $(document).ready(function(e){
+            sortTable("!versiontime", false)
+        });
+    </script>
+{% endblock %}

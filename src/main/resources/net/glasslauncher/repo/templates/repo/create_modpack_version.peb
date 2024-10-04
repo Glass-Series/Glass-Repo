@@ -1,0 +1,64 @@
+{% extends "base.peb" %}
+
+{% block content %}
+    <link href="/static/easymde/easymde.min.css" rel="stylesheet">
+    <link href="/static/fontawesome/css/all.css" rel="stylesheet">
+    <link href="/static/bootstrap-select/css/bootstrap-select.min.css" rel="stylesheet">
+    <h1>Create a Modpack Version</h1>
+    <h5>Only UTF-8 characters are supported!</h5>
+    <br>
+    <form method="post" enctype=multipart/form-data>
+        <div class="form-group">
+            <label><b>Target Modpack</b></label><br>
+            <select name="modpack_id" id="selectpicker">
+                {% for modpack in modpacks %}
+                    <option>{{ modpack }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="form-group">
+            <label><b>Version</b> (<kbd>a-z</kbd>, <kbd>1-9</kbd>, <kbd>.</kbd> and <kbd>_</kbd> only, 15 character limit)</label>
+            <input type="text" name="version" style="text-transform: lowercase" class="form-control">
+        </div>
+        <div class="form-group">
+            <label><b>Modpack File</b> (ZIP files only, MultiMC and Glass Launcher instances only)</label>
+            <input type="file" name="version_file" accept=".zip" class="form-control-file">
+        </div>
+        <div class="form-group">
+            <label><b>Version Description</b> (Markdown, 5000 character limit) <a class="btn btn-secondary btn-sm rounded-lg author" href="#" onmouseup="downloadtext(markdowneditor.value(), 'version_markdown.md')">Download Markdown</a></label>
+            <textarea class="form-control" name="description" id="markdowneditor"></textarea>
+        </div>
+        <div class="form-group">
+            <label><h3>Save your markdown before submitting in case something goes wrong!</h3></label>
+            <input type="submit" class="form-control">
+        </div>
+    </form>
+    <link href="/static/css.css" rel="stylesheet">
+{% endblock %}
+
+{% block extrajs %}
+    <script src="/static/easymde/easymde.min.js"></script>
+    <script src="/static/downloader.js"></script>
+    <script src="/static/bootstrap-select/js/bootstrap-select.min.js"></script>
+    <script>
+        var markdowneditor = new EasyMDE({
+            element: document.getElementById("markdowneditor"),
+            forceSync: true,
+            autosave: {
+                enabled: true,
+                uniqueId: "modpackversion",
+                delay: 1000,
+            },
+            status: ["autosave", "lines", "words", "cursor", {
+                className: "charcount",
+                defaultValue: function(el) {
+                    el.innerHTML = document.getElementById("markdowneditor").value.length + " chars";
+                },
+                onUpdate: function(el) {
+                    el.innerHTML = document.getElementById("markdowneditor").value.length + " chars";
+                }
+            }]
+        });
+        $("#selectpicker").selectpicker({liveSearch: true})
+    </script>
+{% endblock %}

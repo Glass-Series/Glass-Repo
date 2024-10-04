@@ -1,0 +1,98 @@
+{% extends "base.peb" %}
+
+{% block content %}
+    <link href="/static/easymde/easymde.min.css" rel="stylesheet">
+    <link href="/static/fontawesome/css/all.css" rel="stylesheet">
+    <link href="/static/bootstrap-select/css/bootstrap-select.min.css" rel="stylesheet">
+    <h1>Editing {{ mod_name }} Version {{ version_obj.version }}</h1>
+    <h5>Only UTF-8 characters are supported!</h5>
+    <br>
+    <form method="post" enctype=multipart/form-data>
+        <div class="form-group">
+            <label id="version_files"><b>Version Files</b> (ZIP and JAR files only)</label><br>
+            <div class="custom-control custom-checkbox">
+                <input type="checkbox" name="is_client_server" id="is_client_server" class="custom-control-input">
+                <label class="custom-control-label" for="is_client_server"> Client file works on server too</label>
+            </div>
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Client File <small style="color: gray;margin-left: 8px;">(Optional, overwrites existing)</small></span>
+                </div>
+                <div class="custom-file">
+                    <input type="file" id="client_version_file" name="client_version_file" accept=".zip,.jar" class="custom-file-input d-inline" aria-describedby="version_files">
+                    <label class="custom-file-label" for="client_version_file">Choose file...</label>
+                </div>
+            </div>
+            <br>
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Server File <small style="color: gray;margin-left: 8px;">(Optional, overwrites existing)</small></span>
+                </div>
+                <div class="custom-file">
+                    <input type="file" id="server_version_file" name="server_version_file" accept=".zip,.jar" class="custom-file-input d-inline" aria-describedby="version_files">
+                    <label class="custom-file-label" for="server_version_file">Choose file...</label>
+                </div>
+            </div>
+            <br>
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Bukkit/hMod File <small style="color: gray;margin-left: 8px;">(Optional, overwrites existing)</small></span>
+                </div>
+                <div class="custom-file">
+                    <input type="file" id="bukkit_version_file" name="bukkit_version_file" accept=".zip,.jar" class="custom-file-input d-inline" aria-describedby="version_files">
+                    <label class="custom-file-label" for="bukkit_version_file">Choose file...</label>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label><b>Client File Type</b></label><br>
+            <select name="type" id="typeselectpicker" multiple data-selected-text-format="count > 2">
+                {% for type in valid_types %}
+                    <option>{{ type }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="form-group">
+            <label><b>Version Description</b> (Markdown, 5000 character limit) <a class="btn btn-secondary btn-sm rounded-lg author" href="#" onmouseup="downloadtext(markdowneditor.value(), 'version_markdown.md')">Download Markdown</a></label>
+            <textarea class="form-control" name="description" id="markdowneditor"></textarea>
+        </div>
+        <div class="form-group">
+            <label><h3>Save your markdown before submitting in case something goes wrong!</h3></label>
+            <input type="submit" class="form-control">
+        </div>
+    </form>
+    <link href="/static/css.css" rel="stylesheet">
+{% endblock %}
+
+{% block extrajs %}
+    <script src="/static/easymde/easymde.min.js"></script>
+    <script src="/static/downloader.js?ver={{ js_css_version }}"></script>
+    <script src="/static/bootstrap-select/js/bootstrap-select.min.js"></script>
+    <script>
+        var markdowneditor = new EasyMDE({
+            element: document.getElementById("markdowneditor"),
+            forceSync: true,
+            autosave: {
+                enabled: true,
+                uniqueId: "modpackversion",
+                delay: 1000,
+            },
+            status: ["autosave", "lines", "words", "cursor", {
+                className: "charcount",
+                defaultValue: function(el) {
+                    el.innerHTML = document.getElementById("markdowneditor").value.length + " chars";
+                },
+                onUpdate: function(el) {
+                    el.innerHTML = document.getElementById("markdowneditor").value.length + " chars";
+                }
+            }]
+        });
+        markdowneditor.value(`{{ version_obj.description }}`);
+        $("#typeselectpicker").selectpicker({liveSearch: true});
+        $("#typeselectpicker").selectpicker("val", "{{ version_obj.type }}");
+
+        $('.custom-file-input').on('change', function(event) {
+            $(this).next('.custom-file-label').text(event.target.files[0].name);
+        })
+    </script>
+{% endblock %}

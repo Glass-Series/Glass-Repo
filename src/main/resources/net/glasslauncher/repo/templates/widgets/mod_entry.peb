@@ -1,0 +1,50 @@
+<div class="modcontainer margin-bottom">
+    <div class="linkcell margin-bottom"><a href="/repo/mod/{{ mod.id }}" class="clickabletable tablelink smallpadding"><h4 class="nomargin name">{{ mod.name }}</h4></a></div>
+    <div class="row" style="margin:0">
+        <div class="margin-bottom descriptionblock modDesc col-10">{{ mod.shortDescription }}</div>
+        <div style="margin-left: auto; margin-right: 5px; display: flex;">
+            <sub class="version-details downloads" > Downloads: {{ mod.downloads }}</sub>
+            <sub class="version-details">|</sub>
+            <sub class="version-details time"> Created: {{ mod.time }}</sub>
+            <sub class="version-details">|</sub>
+            <sub class="version-details versiontime"> Updated: {{ mod.getLatestVersion().time | default("never") }}</sub>
+            {% include "widgets/author.peb" with { "author": mod.authorObjects[0] } %}
+        </div>
+    </div>
+    <div class="panel autocollapse">
+        <div class="panel-heading clickable clickabletable smallpadding">
+            <p class="panel-title nomargin">
+                Extra Info
+                <i class="fa fa-chevron-down" style="color: rgba(255,255,255,.5); margin-left: 4px;"></i>
+            </p>
+        </div>
+        <div class="panel-body smallpadding">
+            <div class="row nomargin">
+                <div class="Types col-3 modsection">
+                    <h5 style="text-align: center">Types</h5>
+                    {% for type in mod.types %}
+                        <button title="Add to search" class="btn btn-tn btn-secondary marginbottom5" onclick="let val = $('#Types_picker').val(); val.push(this.innerText); $('#Types_picker').selectpicker('val', val)" value="{{ type }}">{{ type }}</button>
+                    {% endfor %}
+                </div>
+                <div class="Minecraft col-3 margin">
+                    <h5 style="text-align: center">Minecraft Versions</h5>
+                    {% for version in mod.minecraftVersions %}
+                        <button title="Add to search" class="btn btn-tn btn-secondary marginbottom5" onclick="let val = $('#Minecraft_picker').val(); val.push(this.innerText); $('#Minecraft_picker').selectpicker('val', val)" value="{{ version }}">{{ version }}</button>
+                    {% endfor %}
+                </div>
+                <div class="Categories col-3 modsection">
+                    <h5 style="text-align: center">Categories</h5>
+                    {% for category in mod.categories %}
+                        <button title="Add to search" class="btn btn-tn btn-secondary marginbottom5" onclick="let val = $('#Categories_picker').val(); val.push(this.innerText); $('#Categories_picker').selectpicker('val', val)" value="{{ category }}">{{ category }}</button>
+                    {% endfor %}
+                </div>
+                <div class="Tags col-3">
+                    <h5 style="text-align: center">Tags</h5>
+                    {% for tag in mod.tags %}
+                        <button title="Add to search" class="btn btn-tn btn-secondary marginbottom5" onclick="addElement($('#Tags_div')[0], '', 'Tags', this)" value="{{ tag }}">{{ tag }}</button>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

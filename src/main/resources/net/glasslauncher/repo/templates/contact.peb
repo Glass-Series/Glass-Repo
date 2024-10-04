@@ -1,0 +1,11 @@
+{% extends "base.peb" %}
+
+{% block content %}
+    <p>
+        To contact me (calmilamsy), you can use either use Glass Launcher's Discord server or my email.
+    </p>
+    <p>
+        Discord: <a href="https://discord.gg/J9vhpBQ">https://discord.gg/J9vhpBQ</a><br>
+        Email: <a href="mailto://calmilamsy@glass-launcher.net">calmilamsy@glass-launcher.net</a>
+    </p>
+{% endblock %}

@@ -1,0 +1,20 @@
+{% extends "base.peb" %}
+
+{% block content %}
+    <h1>Welcome to Glass Repo!</h1>
+    <p>Glass Repo is the equivalent of <a href="https://www.curseforge.com/minecraft/modpacks">Minecraft CurseForge</a> for pre-1.0 releases of Minecraft.</p>
+    <h3>Site is WIP, but very much functional.</h3>
+    <h4><a href="/repo/mods">Mod Repo</a></h4>
+    <br>
+    {% if mod != null %}
+        {% include "widgets/mod_entry.peb" %}
+    {% endif %}
+    <p>
+        <a href="https://glass-launcher.net">Check out the project that started this all, Glass Launcher</a><br>
+        <a href="https://discord.gg/J9vhpBQ">Glass Series Discord</a>
+    </p>
+{% endblock %}
+
+{% block extrajs %}
+    <script src="/static/mod_entries.js?ver={{ js_css_version }}"></script>
+{% endblock %}

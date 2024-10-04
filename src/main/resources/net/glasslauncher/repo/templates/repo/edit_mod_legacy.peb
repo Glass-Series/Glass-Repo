@@ -1,0 +1,46 @@
+{% extends "base.peb" %}
+
+{% block content %}
+    <link href="/static/easymde/easymde.min.css" rel="stylesheet">
+    <link href="/static/fontawesome/css/all.css" rel="stylesheet">
+    <link href="/static/bootstrap-select/css/bootstrap-select.min.css" rel="stylesheet">
+    <h1>Edit Your Mod</h1>
+    <h5>Only UTF-8 characters are supported!</h5>
+    <br>
+    <select id="selectpicker">
+        <option>Name</option>
+        <option>Short Description</option>
+        <option>Description</option>
+        <option>Authors</option>
+        <option>Minecraft Versions</option>
+        <option>Incompatible Mods</option>
+        <option>Edited Classes</option>
+        <option>Dependencies</option>
+        <option>Optional Dependencies</option>
+        <option>Tags</option>
+        <option>Categories</option>
+        <option>Types</option>
+        <option>Webhooks</option>
+    </select>
+    <div class="btn btn-success" onclick="setupEdits(document.getElementById('selectpicker').value)">Add Section</div>
+    <br>
+    <form method="post" id="form">
+    </form>
+{% endblock %}
+
+{% block extrajs %}
+    <script src="/static/edit_manager.js?ver={{ js_css_version }}"></script>
+    <script>
+        Promise.all([addDivs(), getDefualts()]).then(() => {
+            {% if editing %}
+                setupEdits("{{ editing }}");
+            {% endif %}
+        });
+    </script>
+    <script src="/static/easymde/easymde.min.js"></script>
+    <script src="/static/downloader.js?ver={{ js_css_version }}"></script>
+    <script src="/static/bootstrap-select/js/bootstrap-select.min.js"></script>
+    <script>
+        $("#selectpicker").selectpicker({liveSearch: true})
+    </script>
+{% endblock %}
