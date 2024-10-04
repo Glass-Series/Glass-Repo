@@ -3,8 +3,8 @@ package net.glasslauncher.repo.data
 import com.macasaet.fernet.Key
 import com.macasaet.fernet.StringValidator
 import com.macasaet.fernet.Token
-import glasslauncher.net.repo.data.minecraft.VersionDetails
-import glasslauncher.net.repo.readJson
+import net.glasslauncher.repo.data.minecraft.VersionDetails
+import net.glasslauncher.repo.readJson
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.Transient

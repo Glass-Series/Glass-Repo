@@ -1,8 +1,8 @@
 package net.glasslauncher.repo.data.mod
 
-import glasslauncher.net.repo.GlassLogger
-import glasslauncher.net.repo.Repo
-import glasslauncher.net.repo.readJson
+import net.glasslauncher.repo.GlassLogger
+import net.glasslauncher.repo.Repo
+import net.glasslauncher.repo.readJson
 import io.ktor.http.*
 import java.nio.file.FileSystems
 import java.nio.file.Files

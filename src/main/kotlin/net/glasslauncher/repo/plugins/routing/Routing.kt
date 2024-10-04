@@ -1,10 +1,10 @@
 package net.glasslauncher.repo.plugins.routing
 
-import glasslauncher.net.repo.Repo
-import glasslauncher.net.repo.data.SiteConfig
-import glasslauncher.net.repo.data.user.Users
-import glasslauncher.net.repo.helper.collectRoutes
-import glasslauncher.net.repo.plugins.CookieData
+import net.glasslauncher.repo.Repo
+import net.glasslauncher.repo.data.SiteConfig
+import net.glasslauncher.repo.data.user.Users
+import net.glasslauncher.repo.helper.collectRoutes
+import net.glasslauncher.repo.plugins.CookieData
 import io.ktor.http.*
 import io.ktor.server.application.*
 import io.ktor.server.http.content.*

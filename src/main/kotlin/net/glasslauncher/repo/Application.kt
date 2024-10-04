@@ -1,12 +1,12 @@
 package net.glasslauncher.repo
 
-import glasslauncher.net.repo.data.minecraft.VersionDetails
-import glasslauncher.net.repo.data.minecraft.VersionManifestList
-import glasslauncher.net.repo.plugins.configureHTTP
-import glasslauncher.net.repo.plugins.configureSessions
-import glasslauncher.net.repo.plugins.configureSockets
-import glasslauncher.net.repo.plugins.configureTemplating
-import glasslauncher.net.repo.plugins.routing.configureRouting
+import net.glasslauncher.repo.data.minecraft.VersionDetails
+import net.glasslauncher.repo.data.minecraft.VersionManifestList
+import net.glasslauncher.repo.plugins.configureHTTP
+import net.glasslauncher.repo.plugins.configureSessions
+import net.glasslauncher.repo.plugins.configureSockets
+import net.glasslauncher.repo.plugins.configureTemplating
+import net.glasslauncher.repo.plugins.routing.configureRouting
 import io.ktor.serialization.kotlinx.json.*
 import io.ktor.server.application.*
 import io.ktor.server.engine.*

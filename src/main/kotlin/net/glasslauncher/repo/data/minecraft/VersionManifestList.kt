@@ -1,9 +1,9 @@
 package net.glasslauncher.repo.data.minecraft
 
-import glasslauncher.net.repo.GlassLogger
-import glasslauncher.net.repo.JsonReader
-import glasslauncher.net.repo.data.SiteConfig
-import glasslauncher.net.repo.readJson
+import net.glasslauncher.repo.GlassLogger
+import net.glasslauncher.repo.JsonReader
+import net.glasslauncher.repo.data.SiteConfig
+import net.glasslauncher.repo.readJson
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.Transient

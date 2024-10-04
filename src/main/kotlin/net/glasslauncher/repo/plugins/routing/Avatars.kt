@@ -1,6 +1,6 @@
 package net.glasslauncher.repo.plugins.routing
 
-import glasslauncher.net.repo.plugins.routing.objs.Avatars
+import net.glasslauncher.repo.plugins.routing.objs.Avatars
 import io.ktor.http.*
 import io.ktor.server.application.*
 import io.ktor.server.resources.*

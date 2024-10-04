@@ -1,8 +1,8 @@
 package net.glasslauncher.repo.data.user
 
-import glasslauncher.net.repo.HttpClient
-import glasslauncher.net.repo.JsonReader
-import glasslauncher.net.repo.data.SiteConfig
+import net.glasslauncher.repo.HttpClient
+import net.glasslauncher.repo.JsonReader
+import net.glasslauncher.repo.data.SiteConfig
 import io.ktor.client.request.*
 import io.ktor.client.statement.*
 import kotlinx.serialization.Serializable

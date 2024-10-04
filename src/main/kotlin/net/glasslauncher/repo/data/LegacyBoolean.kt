@@ -1,6 +1,6 @@
 package net.glasslauncher.repo.data
 
-import glasslauncher.net.repo.JsonReader.LegacyBooleanSerializer
+import net.glasslauncher.repo.JsonReader.LegacyBooleanSerializer
 import kotlinx.serialization.Serializable
 
 @Serializable(with = LegacyBooleanSerializer::class)

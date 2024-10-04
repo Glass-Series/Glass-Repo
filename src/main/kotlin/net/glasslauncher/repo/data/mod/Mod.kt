@@ -1,9 +1,9 @@
 package net.glasslauncher.repo.data.mod
 
-import glasslauncher.net.repo.*
-import glasslauncher.net.repo.data.ModReference
-import glasslauncher.net.repo.data.user.User
-import glasslauncher.net.repo.data.user.Users
+import net.glasslauncher.repo.*
+import net.glasslauncher.repo.data.ModReference
+import net.glasslauncher.repo.data.user.User
+import net.glasslauncher.repo.data.user.Users
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Transient
 import java.nio.file.FileSystems

@@ -1,6 +1,6 @@
 package net.glasslauncher.repo.data.user
 
-import glasslauncher.net.repo.readJson
+import net.glasslauncher.repo.readJson
 import java.nio.file.FileSystems
 import java.nio.file.Files
 import java.nio.file.Path

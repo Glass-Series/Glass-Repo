@@ -27,7 +27,7 @@ group = "net.glasslauncher"
 version = "3.0.0"
 
 application {
-    mainClass.set("glasslauncher.net.repo.ApplicationKt")
+    mainClass.set("net.glasslauncher.repo.ApplicationKt")
 }
 
 repositories {

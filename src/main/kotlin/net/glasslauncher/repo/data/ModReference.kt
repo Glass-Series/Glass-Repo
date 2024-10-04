@@ -1,6 +1,6 @@
 package net.glasslauncher.repo.data
 
-import glasslauncher.net.repo.JsonReader
+import net.glasslauncher.repo.JsonReader
 import kotlinx.serialization.Serializable
 
 @Serializable(with = JsonReader.ModReferenceSerializer::class)

@@ -1,4 +1,4 @@
-{# @pebvariable name="options" type="java.util.LinkedHashMap<String, java.util.LinkedHashMap<String, glasslauncher.net.repo.data.minecraft.VersionDetails>>" #}
+{# @pebvariable name="options" type="java.util.LinkedHashMap<String, java.util.LinkedHashMap<String, net.glasslauncher.repo.data.minecraft.VersionDetails>>" #}
 
 <script>
 $(document).ready(function() {

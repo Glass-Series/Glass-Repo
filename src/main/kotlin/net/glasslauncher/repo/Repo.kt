@@ -1,6 +1,6 @@
 package net.glasslauncher.repo
 
-import glasslauncher.net.repo.data.mod.ModRepo
+import net.glasslauncher.repo.data.mod.ModRepo
 import java.io.File
 
 class Repo {

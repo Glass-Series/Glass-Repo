@@ -1,9 +1,9 @@
 package net.glasslauncher.repo.plugins.routing
 
-import glasslauncher.net.repo.data.DiscordAuth
-import glasslauncher.net.repo.data.SiteConfig
-import glasslauncher.net.repo.plugins.CookieData
-import glasslauncher.net.repo.plugins.USER_LOGIN_COOKIE
+import net.glasslauncher.repo.data.DiscordAuth
+import net.glasslauncher.repo.data.SiteConfig
+import net.glasslauncher.repo.plugins.CookieData
+import net.glasslauncher.repo.plugins.USER_LOGIN_COOKIE
 import io.ktor.http.*
 import io.ktor.server.application.*
 import io.ktor.server.response.*

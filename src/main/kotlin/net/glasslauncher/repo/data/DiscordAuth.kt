@@ -1,10 +1,10 @@
 package net.glasslauncher.repo.data
 
 import arrow.core.Either
-import glasslauncher.net.repo.GlassLogger
-import glasslauncher.net.repo.HttpClient
-import glasslauncher.net.repo.data.user.User
-import glasslauncher.net.repo.data.user.Users
+import net.glasslauncher.repo.GlassLogger
+import net.glasslauncher.repo.HttpClient
+import net.glasslauncher.repo.data.user.User
+import net.glasslauncher.repo.data.user.Users
 import io.ktor.client.call.*
 import io.ktor.client.request.*
 import io.ktor.client.request.forms.*

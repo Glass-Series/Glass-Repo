@@ -1,10 +1,10 @@
 package net.glasslauncher.repo.data.mod
 
-import glasslauncher.net.repo.Repo
-import glasslauncher.net.repo.cd
-import glasslauncher.net.repo.data.LegacyBoolean
-import glasslauncher.net.repo.renderToHtml
-import glasslauncher.net.repo.toTime
+import net.glasslauncher.repo.Repo
+import net.glasslauncher.repo.cd
+import net.glasslauncher.repo.data.LegacyBoolean
+import net.glasslauncher.repo.renderToHtml
+import net.glasslauncher.repo.toTime
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Transient
 import java.io.File

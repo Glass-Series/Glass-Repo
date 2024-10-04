@@ -1,5 +1,5 @@
 {# Debating on if this is worth doing. #}
-{# @pebvariable name="values" type="glasslauncher.net.repo.data.ModReference[]" #}
+{# @pebvariable name="values" type="net.glasslauncher.repo.data.ModReference[]" #}
 {# @pebvariable name="id" type="String" #}
 {# @pebvariable name="name" type="String" #}
 {# @pebvariable name="description" type="String" #}

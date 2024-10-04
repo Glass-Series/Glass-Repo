@@ -1,7 +1,7 @@
 package net.glasslauncher.repo
 
-import glasslauncher.net.repo.data.LegacyBoolean
-import glasslauncher.net.repo.data.ModReference
+import net.glasslauncher.repo.data.LegacyBoolean
+import net.glasslauncher.repo.data.ModReference
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.SerializationException

@@ -1,6 +1,6 @@
 package net.glasslauncher.repo.plugins.routing
 
-import glasslauncher.net.repo.plugins.CookieData
+import net.glasslauncher.repo.plugins.CookieData
 import io.ktor.http.*
 import io.ktor.server.application.*
 import io.ktor.server.response.*

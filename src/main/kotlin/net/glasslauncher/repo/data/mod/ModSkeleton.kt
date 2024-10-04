@@ -1,6 +1,6 @@
 package net.glasslauncher.repo.data.mod
 
-import glasslauncher.net.repo.data.ModReference
+import net.glasslauncher.repo.data.ModReference
 import kotlinx.serialization.SerialName
 
 @kotlinx.serialization.Serializable
