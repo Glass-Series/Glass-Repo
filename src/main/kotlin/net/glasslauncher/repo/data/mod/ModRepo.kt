@@ -70,7 +70,7 @@ class ModRepo {
 
         modStream = matchStringLists("types", parameters, modStream)
         modStream = matchStringLists("categories", parameters, modStream)
-        modStream = matchStringLists("mcVersions", parameters, modStream)
+        modStream = matchStringLists("minecraftVersions", parameters, modStream)
         modStream = matchStringLists("tags", parameters, modStream)
 
         var mods = modStream.collect(Collectors.toCollection(::ArrayList))
