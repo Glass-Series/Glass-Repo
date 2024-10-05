@@ -1,6 +1,29 @@
 <script>
-function addArrayElement(parent, id, disabled) {
+function addArrayElement(parent, id) {
     parent.insertAdjacentHTML("beforeend", `{% include "widgets/array_element.peb" with { "id": "%id%" } %}`.replace("%id%", id))
+}
+
+function addDisabledArrayElement(parent, id, value, elementToClear) {
+    const children = document.getElementsByName(id)
+    var shouldReturn = false
+
+    if (children && children.length) {
+        children.forEach(child => {
+            if (child.value.trim() === value) {
+                shouldReturn = true
+                return
+            }
+        })
+    }
+    if (shouldReturn) {
+        return
+    }
+
+    if (elementToClear) {
+        elementToClear.value = ""
+    }
+
+    parent.insertAdjacentHTML("beforeend", `{% include "widgets/array_element.peb" with { "id": "%id%", "value": "%value%", "disabled": true } %}`.replace("%id%", id).replace("%value%", value))
 }
 
 function addModArrayElement(parent, id) {

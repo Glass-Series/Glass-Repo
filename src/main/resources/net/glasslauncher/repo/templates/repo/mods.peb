@@ -3,6 +3,7 @@
 {% block content %}
     <link href="/static/fontawesome/css/all.css" rel="stylesheet">
     <link href="/static/bootstrap-select/css/bootstrap-select.min.css" rel="stylesheet">
+    {% include "widgets/array_input_handler.js.peb" %}
     <h1>List of Mods</h1>
     <script>
         function sortTable(desiredMode, direction = true) {
@@ -21,6 +22,35 @@
                 queryParams.set("sortMode", desiredMode + "I")
             }
 
+            runSearch(queryParams)
+        }
+
+        function runSearch(queryParams) {
+            if (!queryParams) {
+                queryParams = new URLSearchParams(document.location.search)
+            }
+            const searchValue = $("#searchbar")[0].value
+
+            if (searchValue && searchValue.trim()) {
+                queryParams.set("searchValue", searchValue)
+            }
+
+            const inputsToNom = ["minecraftVersions", "types", "categories"]
+
+            for (input of inputsToNom) {
+                queryParams.delete(input)
+                const inputElem = $("#" + input)
+                for (val of inputElem.val()) {
+                    queryParams.append(input, val)
+                }
+            }
+
+            queryParams.delete("tags")
+
+            for (elem of $("#tags")[0].lastElementChild.lastElementChild.lastElementChild.children) {
+                queryParams.append("tags", elem.lastElementChild.firstElementChild.value)
+            }
+
             document.location.href = document.location.pathname + "?" + queryParams.toString()
         }
     </script>
@@ -29,8 +59,8 @@
             <tr>
                 <th colspan="6">
                     <div class="input-group">
-                        <input style="background-color: rgba(32, 23, 16, 0.6); border-color: rgba(22, 13, 16, 0.6); color: darkgray" class="form-control searchabletableinput" type="text" id="searchbar" placeholder="Search for names..">
-                        <div class="input-group-append"><button type="button" class="form-control btn btn-success" id="searchbutton" onclick="runSearch(document)">Search</button></div>
+                        <input class="form-control searchabletableinput" type="text" id="searchbar" placeholder="Search for names..">
+                        <div class="input-group-append"><button type="button" class="form-control btn btn-success" id="searchbutton" onclick="runSearch()">Search</button></div>
                     </div>
                     <br>
                     <div class="row">
@@ -39,10 +69,45 @@
                     </div>
                     <div class="container">
                         <div class="row">
-                            <div class="col-sm" id="types_parent_div"></div>
-                            <div class="col-sm" id="minecraft_versions_parent_div"></div>
-                            <div class="col-sm" id="categories_parent_div"></div>
-                            <div class="col-sm" id="tags_parent_div"></div>
+                            <div class="col-sm">
+                                <label>Mod Types</label><br />
+                                <select id="types" class="selectpicker" multiple data-live-search="true" data-size="8">
+                                    {% for value in types %}
+                                        <option value="{{ value }}">{{ value }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="col-sm">
+                                <label>Minecraft Versions</label><br />
+                                <select id="minecraftVersions" class="selectpicker" multiple data-live-search="true" data-size="8">
+                                        {% for value in minecraftVersions %}
+                                        <option value="{{ value }}">{{ value }}</option>
+                                        {% endfor %}
+                                </select>
+                            </div>
+                            <div class="col-sm">
+                                <label>Categories</label><br />
+                                <select id="categories" class="selectpicker" multiple data-live-search="true" data-size="8">
+                                        {% for value in categories %}
+                                        <option value="{{ value }}">{{ value }}</option>
+                                        {% endfor %}
+                                </select>
+                            </div>
+                            <div class="col-sm">
+                                <div class="form-group" id="tags">
+                                    <label>Tags</label>
+                                    <input class="input-group-text form-control-sm" type="text" id="tags_input">
+                                    <br style="font-size: 2px;">
+                                    <div class="row" style="width: 236px;">
+                                        <div class="btn btn-sm btn-success" style="width: 45px;" onclick="addDisabledArrayElement(document.getElementById('tags_dropdown'), 'tags', document.getElementById('tags_input').value, document.getElementById('tags_input'))" data-bs-auto-close="outside">Add</div>
+                                        <div class="dropdown" style="width: 174px;">
+                                            <button class="btn btn-sm btn-secondary dropdown-toggle" style="width: 156px;" type="button" id="toggle_tags" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Selected Tags</button>
+                                            <div class="dropdown-menu" id="tags_dropdown" aria-labelledby="toggle_tags" data-bs-theme="dark">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </th>
@@ -70,8 +135,6 @@
 {#    <script src="/static/search.js?ver={{ js_css_version }}"></script>#}
     <script src="/static/mod_entries.js?ver={{ js_css_version }}"></script>
     <script>
-        var isComplexSearch = true;
-        setup();
         $("#searchbar")[0].addEventListener("keyup", (event) => {
             if (event.keyCode === 13) {
                 event.preventDefault();
@@ -79,8 +142,11 @@
             }
         });
 
-        $(document).ready(function(e){
-            sortTable("!versiontime", false)
+        $("#tags_input")[0].addEventListener("keyup", (event) => {
+            if (event.keyCode === 13) {
+                event.preventDefault();
+                addDisabledArrayElement(document.getElementById('tags_dropdown'), 'tags', document.getElementById('tags_input').value, document.getElementById('tags_input'))
+            }
         });
     </script>
 {% endblock %}
