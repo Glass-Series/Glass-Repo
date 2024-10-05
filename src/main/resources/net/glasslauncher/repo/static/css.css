@@ -7,9 +7,17 @@
     backdrop-filter: brightness(160%) contrast(105%);
 }
 
+a.navbar-brand, a.nav-link {
+    color: #bababa!important;
+}
+
+a.navbar-brand:hover, a.nav-link:hover {
+    color: #dadada!important;
+}
+
 .dropdown-item:hover, .dropdown-item:active, .dropdown-item:focus {
     background-color: var(--dark);
-    color: rgba(255, 255, 255, .75)!important;
+    color: rgba(255, 255, 255, .75);
 }
 
 .dropdown-item:link, .dropdown-item:visited {
@@ -47,7 +55,7 @@ body {
     background: hsla(0, 0%, 30%, .7);
     box-shadow: inset 0 0 10px var(--dark);
     padding: 20px;
-    color: #dadada !important;
+    color: #dadada;
     overflow-x: hidden;
     min-height: 25rem;
     height: fit-content;
@@ -59,7 +67,7 @@ body {
     background: hsla(0, 0%, 30%, 1);
     box-shadow: inset 0 0 10px var(--dark);
     padding: 20px;
-    color: #dadada !important;
+    color: #dadada;
     overflow-x: hidden;
     min-height: 25rem;
 }
@@ -70,6 +78,7 @@ body {
 
 .clickabletable {
     transition: all .15s linear;
+    cursor: pointer;
 }
 
 .EasyMDEContainer {
@@ -87,9 +96,20 @@ a .clickabletable {
     color: #bababa;
 }
 
-table {
+.searchabletableinput::placeholder {
     color: #bababa;
-    border-radius: .25rem;
+}
+
+.searchabletableinput {
+    color: #dadada;
+    background-color: rgba(32, 23, 16, 0.6);
+    border-color: rgba(22, 13, 16, 0.6)
+}
+
+.searchabletableinput:focus {
+    color: #dadada;
+    background-color: rgba(32, 23, 16, 0.6);
+    border-color: rgba(22, 13, 16, 0.6)
 }
 
 .row a {
@@ -101,7 +121,7 @@ table {
     max-width: 100%;
 }
 
-.row a:link, .row a:visited, .row a:active, .row a:hover, .row a:focus {
+.row a:link:not(.btn), .row a:visited:not(.btn), .row a:active:not(.btn), .row a:hover:not(.btn), .row a:focus:not(.btn) {
     color: #bababa;
 }
 
@@ -119,12 +139,18 @@ table {
 }
 
 .table {
-    color: #bababa!important;
+    --bs-table-color: #bababa;
+    --bs-table-bg: transparent;
     border-radius: .25rem;
 }
 
 .table .table-body .row:nth-of-type(odd) {
     background-color: rgba(255,255,255,.05);
+    --bs-table-bg: rgba(255,255,255,.05);
+}
+
+.thead {
+    --bs-table-bg: red;
 }
 
 .table .row {
@@ -171,19 +197,19 @@ a.tablelink {
 }
 
 .linkcell {
-    margin-top: -1px!important;
-    border-spacing: 0!important;
-    padding: 0!important;
+    margin-top: -1px;
+    border-spacing: 0;
+    padding: 0;
     display: flex;
 }
 
 .loginbutton:not(:disabled) {
-    background-color: #7289DA!important;
-    color: black!important;
+    background-color: #7289DA;
+    color: black;
 }
 
 .loginbutton:active, .loginbutton:focus {
-    background-color: #5f6fbe!important;
+    background-color: #5f6fbe;
 }
 
 .margin-bottom {
@@ -213,7 +239,7 @@ a.tablelink {
 }
 
 .modsection {
-    background-color: rgba(255, 255, 255, 0.1)!important;
+    background-color: rgba(255, 255, 255, 0.1);
     border-radius: 0.25rem;
 }
 
@@ -274,29 +300,38 @@ a:link, a:visited, a:active, a:hover, a:focus {
     color: deepskyblue;
 }
 
-a.btn {
-    color: #dadada!important;
+.btn {
+    --bs-btn-color: #dadada;
+    color: var(--bs-btn-color)!important;
+    font-weight: bold;
 }
 
-a.btn-success, button.btn-success, input.btn-success, div.btn-success, .btn-green {
-    color: #495057!important;
+.btn:hover, btn:active {
+    --bs-btn-color: #eeeeee;
 }
 
-a.btn-green:active, a.btn-green:hover {
-    color: #cfdde3 !important;
-    background-color: #9d6e1e;
-    border-color: #9d6e1e;
+.btn-success, .btn-green {
+    --bs-btn-color: #dadada;
 }
 
-a.btn-green {
-    color: #cfdde3 !important;
-    background-color: #bf8923;
-    border-color: #bf8923;
+.btn-green {
+    --bs-btn-bg: #bf8923;
+    --bs-btn-border-color: #bf8923;
+}
+
+.btn-green:active, a.btn-green:hover, .btn-success:active, a.btn-success:hover {
+    --bs-btn-gb: #9d6e1e;
+    --bs-btn-border-color: #9d6e1e;
+}
+
+.dropdown-toggle {
+    --bs-btn-color: grey;
 }
 
 .author {
     color: var(--white);
     height: 30px;
+    flex-grow: 0;
 }
 
 .author-img {
@@ -310,7 +345,14 @@ sup.version, sub.version {
     font-weight: normal;
 }
 
-sup.version-details, sub.version-details {
+.mod-info {
+    margin-left: auto;
+    margin-right: 5px;
+    display: flex;
+    width: auto
+}
+
+.version-details {
     color: gray;
     font-size: .75rem;
     margin-right: 10px;
@@ -342,7 +384,7 @@ kbd {
 
 .editor-toolbar, .editor-statusbar {
     opacity: 0.6;
-    background-color: var(--gray-dark)!important;
+    background-color: var(--gray-dark);
 }
 
 .editor-statusbar {
@@ -359,7 +401,7 @@ kbd {
 }
 
 .editor-toolbar button {
-    color: lightgray!important;
+    color: lightgray;
 }
 
 .btn-tn {

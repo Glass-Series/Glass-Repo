@@ -35,12 +35,12 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarResponsive">
-                <ul class="navbar-nav ml-auto">
+                <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
                         <a class="nav-link" href="/">Home</a>
                     </li>
                     <li class="nav-item dropdown">
-                        <a id="dropdownInfo" class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" aria-haspopup="true" aria-expanded="false">Info</a>
+                        <a id="dropdownInfo" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" aria-haspopup="true" aria-expanded="false">Info</a>
                         <div class="dropdown-menu dropdown-menu-right bg-dark" data-container="body" aria-labelledby="dropdownInfo">
                             <a class="dropdown-item" href="https://glass-launcher.net">Launcher</a>
                             <div class="dropdown-divider"></div>
@@ -54,7 +54,7 @@
                         </div>
                     </li>
                     <li class="nav-item dropdown">
-                        <a id="dropdownRepo" class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" aria-haspopup="true" aria-expanded="false">Repo</a>
+                        <a id="dropdownRepo" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" aria-haspopup="true" aria-expanded="false">Repo</a>
                         <div class="dropdown-menu dropdown-menu-right bg-dark" data-container="body" aria-labelledby="dropdownRepo">
                             <a class="dropdown-item" href="/repo">Home</a>
                             <div class="dropdown-divider"></div>
@@ -65,7 +65,7 @@
                     </li>
                     {% if usersession != null  %}
                         <li class="nav-item dropdown">
-                            <a id="dropdownUser" class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" aria-haspopup="true" aria-expanded="false">{{ usersession.username }}</a>
+                            <a id="dropdownUser" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" aria-haspopup="true" aria-expanded="false">{{ usersession.username }}</a>
                             <div class="dropdown-menu dropdown-menu-right bg-dark" data-container="body" aria-labelledby="dropdownUser">
                                 <a class="dropdown-item" href="/logout">Logout</a>
                                 <div class="dropdown-divider"></div>

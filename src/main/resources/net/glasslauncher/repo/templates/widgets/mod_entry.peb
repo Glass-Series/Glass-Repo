@@ -2,13 +2,15 @@
     <div class="linkcell margin-bottom"><a href="/repo/mod/{{ mod.id }}" class="clickabletable tablelink smallpadding"><h4 class="nomargin name">{{ mod.name }}</h4></a></div>
     <div class="row" style="margin:0">
         <div class="margin-bottom descriptionblock modDesc col-10">{{ mod.shortDescription }}</div>
-        <div style="margin-left: auto; margin-right: 5px; display: flex;">
+        <div class="mod-info">
             <sub class="version-details downloads" > Downloads: {{ mod.downloads }}</sub>
             <sub class="version-details">|</sub>
             <sub class="version-details time"> Created: {{ mod.time }}</sub>
             <sub class="version-details">|</sub>
             <sub class="version-details versiontime"> Updated: {{ mod.getLatestVersion().time | default("never") }}</sub>
+            <div>
             {% include "widgets/author.peb" with { "author": mod.authorObjects[0] } %}
+            </div>
         </div>
     </div>
     <div class="panel autocollapse">
