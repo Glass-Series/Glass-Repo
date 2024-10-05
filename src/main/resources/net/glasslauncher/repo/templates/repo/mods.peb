@@ -4,6 +4,26 @@
     <link href="/static/fontawesome/css/all.css" rel="stylesheet">
     <link href="/static/bootstrap-select/css/bootstrap-select.min.css" rel="stylesheet">
     <h1>List of Mods</h1>
+    <script>
+        function sortTable(desiredMode, direction = true) {
+            let queryParams = new URLSearchParams(document.location.search)
+            let searchMode = queryParams.get("sortMode")
+
+            if (searchMode !== desiredMode) {
+                if (direction && !searchMode.endsWith("I")) {
+                    queryParams.set("sortMode", desiredMode + "I")
+                }
+                else {
+                    queryParams.set("sortMode", desiredMode)
+                }
+            }
+            else {
+                queryParams.set("sortMode", desiredMode + "I")
+            }
+
+            document.location.href = document.location.pathname + "?" + queryParams.toString()
+        }
+    </script>
     <table class="table table-dark">
         <thead>
             <tr>
@@ -28,16 +48,19 @@
                 </th>
             </tr>
             <tr>
-                <th scope="col" class="clickabletable" onclick="sortTable('name')">Sort Mod Names Alphabetically</th>
+                <th scope="col" class="clickabletable" onclick="sortTable('alphabetical')">Sort Mod Names Alphabetically</th>
                 <th scope="col" class="clickabletable" onclick="sortTable('downloads', false)">Sort by Downloads</th>
-                <th scope="col" class="clickabletable" onclick="sortTable('!versiontime', false)">Sort by Recently Updated</th>
-                <th scope="col" class="clickabletable" onclick="sortTable('!time', false)">Sort by Recently Created</th>
+                <th scope="col" class="clickabletable" onclick="sortTable('updated', false)">Sort by Recently Updated</th>
+                <th scope="col" class="clickabletable" onclick="sortTable('created', false)">Sort by Recently Created</th>
+                {% if didSearch %}
+                    <th scope="col" class="clickabletable" onclick="sortTable('created', false)">Sort by Relevancy</th>
+                {% endif %}
             </tr>
         </thead>
     </table>
     <div class="searchabletable">
         {% for mod in modpack_list %}
-            {% include "widgets/mod_entry.peb" %}
+            {% include "widgets/mod_entry.peb" with { "mod": mod } %}
         {% endfor %}
     </div>
 {% endblock %}

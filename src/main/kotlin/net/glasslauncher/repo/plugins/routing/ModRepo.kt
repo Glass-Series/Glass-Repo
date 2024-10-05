@@ -30,7 +30,7 @@ fun Application.configureModRepoRouting() {
     GlassLogger.INSTANCE.info("Adding mod repo routes")
     routing {
         get<ModsRoute> {
-            respond(call, mapOf("modpack_list" to Repo.modRepo.filterMods(call.request.queryParameters)))
+            respond(call, mapOf("modpack_list" to Repo.modRepo.filterMods(call.request.queryParameters), "didSearch" to (call.request.queryParameters["searchText"]?.isNotEmpty() == true)))
         }
 
         get<ModRoute.View> { params ->

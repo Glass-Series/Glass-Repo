@@ -73,22 +73,25 @@ class ModRepo {
         modStream = matchStringLists("mcVersions", parameters, modStream)
         modStream = matchStringLists("tags", parameters, modStream)
 
-        var mods = modStream.toList()
+        var mods = modStream.collect(Collectors.toCollection(::ArrayList))
         val amount = (parameters["amount"]?.toIntOrNull() ?: 20).coerceIn(min(10, mods.size - 1) .. min(50, mods.size - 1))
         val page = parameters["page"]?.toIntOrNull() ?: 0
         val startIndex = amount * page
 
-        mods = mods.slice(startIndex .. startIndex + amount)
-
-        when(parameters["searchMode"]) {
+        when(parameters["sortMode"]) {
             "relevancy" -> mods.sortByDescending { relevancy[it] }
+            "relevancyI" -> mods.sortBy { relevancy[it] }
             "created" -> mods.sortByDescending { it.timestamp.toInt() }
-            "createdI" -> mods.sortByDescending { it.timestamp.toInt() }
+            "createdI" -> mods.sortBy { it.timestamp.toInt() }
+            "downloads" -> mods.sortByDescending { it.downloads }
+            "downloadsI" -> mods.sortBy { it.downloads }
             "alphabetical" -> mods.sortByDescending { it.name }
             "alphabeticalI" -> mods.sortBy { it.name }
             "updatedI" -> mods.sortBy { it.getLatestVersion()?.timestamp ?: 0.0 }
             else -> mods.sortByDescending { it.getLatestVersion()?.timestamp ?: 0.0 }
         }
+
+        mods = ArrayList(mods.slice(startIndex .. startIndex + amount))
 
         return mods
     }
