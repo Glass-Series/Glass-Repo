@@ -17,8 +17,14 @@ import kotlinx.serialization.json.Json
 import java.io.File
 import java.net.URL
 import java.nio.charset.StandardCharsets
+import kotlin.system.exitProcess
 
 fun main() {
+    if (!File("config.json5").exists()) {
+        System.err.println("Rename the example config to \"config.json5\" and fill it out.")
+        exitProcess(1)
+    }
+
     System.getProperties().setProperty("io.ktor.development", "true")
 
     val cacheFile = Repo.mcMetaPath.cd("index.json")
