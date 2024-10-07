@@ -1,6 +1,6 @@
 {
   // The ID of your oauth application.
-  "dc_id": 1337,
+  "dc_id": "1337",
   // The oauth secret.
   "dc_scrt": "yoursecrethere",
   // The master webhook URL. Any time a webhook request is sent, it will be sent here too.
