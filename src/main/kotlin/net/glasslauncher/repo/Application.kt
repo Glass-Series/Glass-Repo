@@ -21,7 +21,7 @@ import java.nio.charset.StandardCharsets
 fun main() {
     System.getProperties().setProperty("io.ktor.development", "true")
 
-    val cacheFile = File("repo/minecraftMeta/index.json")
+    val cacheFile = Repo.mcMetaPath.cd("index.json")
     var json: VersionManifestList
     try {
         json = JsonReader.fromJson(
