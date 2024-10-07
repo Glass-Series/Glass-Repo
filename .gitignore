@@ -40,6 +40,9 @@ out/
 
 ### Glass Repo Files ###
 config.json5
-/repo/
+/repo/*
+!/repo/mods
+/repo/mods/*
+!/repo/mods/testmod
 /users/
 /sessions/
