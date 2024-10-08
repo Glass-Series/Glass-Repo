@@ -30,12 +30,15 @@ fun Application.configureModRepoRouting() {
     GlassLogger.INSTANCE.info("Adding mod repo routes")
     routing {
         get<ModsRoute> {
+            val filtered = Repo.modRepo.filterMods(call.request.queryParameters)
             respond(call, mapOf(
-                "modpack_list" to Repo.modRepo.filterMods(call.request.queryParameters),
+                "modpack_list" to filtered.mods,
                 "didSearch" to (call.request.queryParameters["searchText"]?.isNotEmpty() == true),
                 "types" to ValidModValues.types,
                 "categories" to ValidModValues.categories,
                 "minecraftVersions" to VersionManifestList.allVersionsKeys,
+                "pages" to filtered.pages,
+                "currentPage" to (call.request.queryParameters["page"]?.toIntOrNull() ?: 1),
             ))
         }
 

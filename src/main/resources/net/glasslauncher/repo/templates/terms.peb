@@ -21,9 +21,9 @@
     <h3>Data Explanations:</h3>
     <ol>
         <li>Discord ID: Used inside site internals to track who you are.</li>
-        <li>Email: Used to communicate changes to your projects and your account, as I can't reliably a bot to send DMs to people on discord. May be used for other purposes in the future.</li>
+        <li>Email: Used to communicate changes to your projects and your account, as I can't reliably use a bot to send DMs to people on discord. May be used for other purposes in the future.</li>
         <li>Username: So other people know who you are.</li>
-        <li>Avatar ID/Avatar: So people can visually identify you. The avatar is stored to save on API requests to discord, otherwise avatars would break every time someone changed it on discord.</li>
+        <li>Avatar ID/Avatar: So people can visually identify you. The avatar is stored to save on API requests to discord, otherwise your avatar would break every time you change it on discord.</li>
         <li>Content: So I can host your mods.</li>
     </ol>
 {% endblock %}

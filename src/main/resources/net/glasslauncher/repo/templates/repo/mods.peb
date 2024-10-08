@@ -6,6 +6,9 @@
     {% include "widgets/array_input_handler.js.peb" %}
     <h1>List of Mods</h1>
     <script>
+        // Reused throughout the page.
+        const searchParams = new URLSearchParams(document.location.search)
+
         function sortTable(desiredMode, direction = true) {
             let queryParams = new URLSearchParams(document.location.search)
             let searchMode = queryParams.get("sortMode")
@@ -28,11 +31,16 @@
         function runSearch(queryParams) {
             if (!queryParams) {
                 queryParams = new URLSearchParams(document.location.search)
+                queryParams.set("sortMode", "relevancy")
             }
+            queryParams.delete("page")
             const searchValue = $("#searchbar")[0].value
 
             if (searchValue && searchValue.trim()) {
-                queryParams.set("searchValue", searchValue)
+                queryParams.set("searchText", searchValue)
+            }
+            else {
+                queryParams.delete("searchText")
             }
 
             const inputsToNom = ["minecraftVersions", "types", "categories"]
@@ -53,20 +61,26 @@
 
             document.location.href = document.location.pathname + "?" + queryParams.toString()
         }
+
+        function gotoPage(page) {
+            searchParams.set("page", page)
+            document.location.href = document.location.pathname + "?" + searchParams.toString()
+        }
     </script>
-    <table class="table table-dark">
+    <table class="table table-dark" style="margin-bottom: 0">
         <thead>
             <tr>
                 <th colspan="6">
                     <div class="input-group">
                         <input class="form-control searchabletableinput" type="text" id="searchbar" placeholder="Search for names..">
+                        <script>
+                            if (searchParams.get("searchText")) {
+                                $("#searchbar")[0].value = searchParams.get("searchText")
+                            }
+                        </script>
                         <div class="input-group-append"><button type="button" class="form-control btn btn-success" id="searchbutton" onclick="runSearch()">Search</button></div>
                     </div>
                     <br>
-                    <div class="row">
-                        <label class="col-3"><input type="checkbox" id="isRegex"/> Use regex</label>
-                        <label class="col-3" title="Make sure search results match ALL your input values"><input type="checkbox" id="isAnd" checked/> AND</label>
-                    </div>
                     <div class="container">
                         <div class="row">
                             <div class="col-sm">
@@ -107,6 +121,14 @@
                                         </div>
                                     </div>
                                 </div>
+                                <script>
+                                    if (searchParams.get("tags")) {
+                                        const tagsDropdown = document.getElementById('tags_dropdown')
+                                        for (const tag of searchParams.getAll("tags")) {
+                                            addDisabledArrayElement(tagsDropdown, 'tags', tag)
+                                        }
+                                    }
+                                </script>
                             </div>
                         </div>
                     </div>
@@ -118,11 +140,29 @@
                 <th scope="col" class="clickabletable" onclick="sortTable('updated', false)">Sort by Recently Updated</th>
                 <th scope="col" class="clickabletable" onclick="sortTable('created', false)">Sort by Recently Created</th>
                 {% if didSearch %}
-                    <th scope="col" class="clickabletable" onclick="sortTable('created', false)">Sort by Relevancy</th>
+                    <th scope="col" class="clickabletable" onclick="sortTable('relevancy', false)">Sort by Relevancy</th>
                 {% endif %}
             </tr>
         </thead>
     </table>
+    <div style="display: inline-flex; width: 100%; margin-bottom: 1rem; background: rgba(32, 23, 16, 0.6)">
+        <span style="margin-left: 0.4rem; margin-right: 0.7rem; margin-top: 0.2rem">Pages:</span>
+        {% for pageNumber in range(1, pages) %}
+            {% if pageNumber != currentPage %}
+            <div class="btn btn-sm btn-secondary" onclick="gotoPage('{{ pageNumber }}')">
+                <a href="#">{{ pageNumber }}</a>
+            </div>
+            {% else %}
+            <div class="btn btn-sm btn-secondary">
+                {{ pageNumber }}
+            </div>
+            {% endif %}
+        {% endfor %}
+        <div class="col" style="margin-left: auto; flex-grow: 0; width: 10rem; display: inline-flex"><input id="pageInput" type="number" style="width: 4rem"><a class="btn btn-sm btn-success" style="padding-top: 2px; padding-bottom: 2px" href="#">Go</a></div>
+        <script>
+            $("#pageInput")[0].value = searchParams.get("page")
+        </script>
+    </div>
     <div class="searchabletable">
         {% for mod in modpack_list %}
             {% include "widgets/mod_entry.peb" with { "mod": mod } %}
@@ -141,7 +181,15 @@
                 $("#searchbutton")[0].click();
             }
         });
+    </script>
+    <script>
+        const urlParams = new URLSearchParams(document.location.search)
 
+        for (const picker of $(".selectpicker")) {
+            $(picker).selectpicker("val", urlParams.getAll(picker.id))
+        }
+    </script>
+    <script>
         $("#tags_input")[0].addEventListener("keyup", (event) => {
             if (event.keyCode === 13) {
                 event.preventDefault();

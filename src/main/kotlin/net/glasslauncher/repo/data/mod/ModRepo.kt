@@ -11,8 +11,10 @@ import java.nio.file.PathMatcher
 import java.util.stream.Collectors
 import java.util.stream.Stream
 import kotlin.io.path.isDirectory
-import kotlin.math.max
+import kotlin.math.ceil
+import kotlin.math.floor
 import kotlin.math.min
+import kotlin.math.round
 
 class ModRepo {
     val cache = HashMap<String, Mod>()
@@ -42,7 +44,7 @@ class ModRepo {
         return Path.of(Repo.modRepoPath.absolutePath, "${id}/version/${version}.json").readJson()
     }
 
-    fun filterMods(parameters: Parameters): List<Mod> {
+    fun filterMods(parameters: Parameters): FilterResult {
         var modStream = cacheArray.stream()
 
         val relevancy = HashMap<Mod, Int>()
@@ -51,11 +53,11 @@ class ModRepo {
         if (stringParam?.isNotEmpty() == true) {
             modStream = modStream.filter {
                 var matches = false
-                if (stringParam.contains(it.id, true)) {
+                if (stringParam.contains(it.id, true) || it.id.contains(stringParam, true)) {
                     relevancy[it] = 10 // If id matches, then the user is *probably* looking for this.
                     matches = true
                 }
-                if (stringParam.contains(it.name, true)) {
+                if (stringParam.contains(it.name, true) || it.name.contains(stringParam, true)) {
                     relevancy[it] = (relevancy[it] ?: 0) + 5 // Make name matches fairly important.
                     matches = true
                 }
@@ -74,9 +76,9 @@ class ModRepo {
         modStream = matchStringLists("tags", parameters, modStream)
 
         var mods = modStream.collect(Collectors.toCollection(::ArrayList))
-        val amount = (parameters["amount"]?.toIntOrNull() ?: 20).coerceIn(min(10, mods.size - 1) .. min(50, mods.size - 1))
+        val modsPerPage = (parameters["amount"]?.toIntOrNull() ?: 20).coerceIn(min(10, mods.size - 1) .. min(50, mods.size - 1))
         val page = parameters["page"]?.toIntOrNull() ?: 0
-        val startIndex = amount * page
+        val startIndex = modsPerPage * (page - 1)
 
         when(parameters["sortMode"]) {
             "relevancy" -> mods.sortByDescending { relevancy[it] }
@@ -91,9 +93,11 @@ class ModRepo {
             else -> mods.sortByDescending { it.getLatestVersion()?.timestamp ?: 0.0 }
         }
 
-        mods = ArrayList(mods.slice(startIndex .. startIndex + amount))
+        val pages = ceil(mods.size.toFloat() / modsPerPage).toInt()
 
-        return mods
+        mods = ArrayList(mods.slice(startIndex .. ((startIndex - 1) + if (startIndex + modsPerPage >= mods.size) (mods.size % modsPerPage) else modsPerPage)))
+
+        return FilterResult(mods, pages)
     }
 
     private fun matchStringLists(id: String, parameters: Parameters, modStream: Stream<Mod>): Stream<Mod> {
