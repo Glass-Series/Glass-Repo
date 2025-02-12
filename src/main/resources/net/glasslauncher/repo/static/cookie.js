@@ -48,6 +48,7 @@ jQuery(function($) {
 
 });
 
+// Shitty workaround for the markdown editor's fullscreen mode not overlaying the banner for some reason.
 function hideNav() {
     let elem = $(".navbar-image.fixed-top");
     if (elem.css("display") === "none") {
@@ -61,6 +62,7 @@ function hideNav() {
     }
 }
 
+// Used for the modlist page to hide mod info unless wanted. This *really* needs improvements for server load in the future.
 function toggleDropdown(elem) {
     let panel = elem.parent(".panel");
     let panel_body = panel.children(".panel-body");

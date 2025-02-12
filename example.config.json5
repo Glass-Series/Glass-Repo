@@ -6,7 +6,7 @@
   // The master webhook URL. Any time a webhook request is sent, it will be sent here too.
   "dc_mwhurl": "yourwebhookhere",
 
-  // The fernet key. See the fernet docs on how to generate one. Don't use this premade on production servers.
+  // The fernet key. Handles encrypting user emails and (in the future) any other potentially sensitive data. See the fernet docs on how to generate one. Don't use this premade on production servers.
   "fernet": "Vqpzqiz_opHEubOgsVm7DrUh6h-Ubo3Dfc-U5IlLeU4=",
 
   // The mail provider password.
