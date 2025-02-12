@@ -116,7 +116,7 @@
                                         <div class="btn btn-sm btn-success" style="width: 45px;" onclick="addDisabledArrayElement(document.getElementById('tags_dropdown'), 'tags', document.getElementById('tags_input').value, document.getElementById('tags_input'))" data-bs-auto-close="outside">Add</div>
                                         <div class="dropdown" style="width: 174px;">
                                             <button class="btn btn-sm btn-secondary dropdown-toggle" style="width: 156px;" type="button" id="toggle_tags" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Selected Tags</button>
-                                            <div class="dropdown-menu" id="tags_dropdown" aria-labelledby="toggle_tags" data-bs-theme="dark">
+                                            <div class="dropdown-menu" id="tags_dropdown" aria-labelledby="toggle_tags">
                                             </div>
                                         </div>
                                     </div>
