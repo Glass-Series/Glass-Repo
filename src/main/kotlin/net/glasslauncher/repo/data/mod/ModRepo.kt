@@ -78,7 +78,7 @@ class ModRepo {
         var mods = modStream.collect(Collectors.toCollection(::ArrayList))
         val modsPerPage = (parameters["amount"]?.toIntOrNull() ?: 20).coerceIn(min(10, mods.size - 1) .. min(50, mods.size - 1))
         val page = parameters["page"]?.toIntOrNull() ?: 0
-        val startIndex = modsPerPage * (page - 1)
+        val startIndex = modsPerPage * page
 
         when(parameters["sortMode"]) {
             "relevancy" -> mods.sortByDescending { relevancy[it] }

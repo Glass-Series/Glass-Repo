@@ -147,14 +147,14 @@
     </table>
     <div style="display: inline-flex; width: 100%; margin-bottom: 1rem; background: rgba(32, 23, 16, 0.6)">
         <span style="margin-left: 0.4rem; margin-right: 0.7rem; margin-top: 0.2rem">Pages:</span>
-        {% for pageNumber in range(1, pages) %}
+        {% for pageNumber in range(0, pages - 1) %}
             {% if pageNumber != currentPage %}
             <div class="btn btn-sm btn-secondary" onclick="gotoPage('{{ pageNumber }}')">
-                <a href="#">{{ pageNumber }}</a>
+                <a href="#">{{ pageNumber + 1 }}</a>
             </div>
             {% else %}
             <div class="btn btn-sm btn-secondary">
-                {{ pageNumber }}
+                {{ pageNumber + 1 }}
             </div>
             {% endif %}
         {% endfor %}

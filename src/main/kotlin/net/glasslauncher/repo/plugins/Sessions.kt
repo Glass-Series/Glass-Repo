@@ -2,6 +2,7 @@ package net.glasslauncher.repo.plugins
 
 import io.ktor.server.application.*
 import io.ktor.server.sessions.*
+import kotlinx.serialization.Serializable
 import java.io.File
 
 const val USER_LOGIN_COOKIE = "user_login"
@@ -15,4 +16,5 @@ fun Application.configureSessions() {
 
 }
 
+@Serializable
 data class CookieData(val userId: String)

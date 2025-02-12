@@ -38,7 +38,7 @@ class User {
         val response = HttpClient.client.get("https://cdn.discordapp.com/avatars/${id}/${avatar}${extension}")
 
         metaFile.writeBytes(extension.toByteArray())
-        avatarFile.writeBytes(response.readBytes())
+        avatarFile.writeBytes(response.readRawBytes())
     }
 
     fun save() {

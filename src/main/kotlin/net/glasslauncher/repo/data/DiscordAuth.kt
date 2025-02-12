@@ -20,7 +20,7 @@ data class DiscordAuth(
     val redirectURI: String
 ) {
 
-    suspend fun signIn(call: PipelineContext<Unit, ApplicationCall>): Either<String, User> {
+    suspend fun signIn(): Either<String, User> {
         var response = HttpClient.client.submitForm(url = "https://discord.com/api/oauth2/token", formParameters = parameters {
             append("code", code)
             append("redirect_uri", "${redirectURI}/login")

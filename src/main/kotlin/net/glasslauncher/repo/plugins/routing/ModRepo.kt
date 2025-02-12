@@ -75,7 +75,7 @@ fun Application.configureModRepoRouting() {
             val mod = Repo.modRepo.cache[params.id]!!
             val version = mod.versionsMap[params.version]!!
 
-            val file = version.getFile(queryParameters().getOrDefault("type", "zip"), queryParameters().getOrDefault("side", "client"));
+            val file = version.getFile(call.request.queryParameters.getOrDefault("type", "zip"), call.request.queryParameters.getOrDefault("side", "client"));
             call.response.header(HttpHeaders.ContentDisposition, "attachment; filename=\"${file.name}\"")
             call.respondFile(file)
         }

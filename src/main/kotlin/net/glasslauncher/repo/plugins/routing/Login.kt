@@ -25,7 +25,7 @@ fun Application.configureLoginRouting() {
 
             val authCode = call.request.queryParameters["code"]
             if (authCode != null) {
-                val returned = DiscordAuth(authCode, host).signIn(this)
+                val returned = DiscordAuth(authCode, host).signIn()
                 host = SiteConfig.config.getDiscordOauthURL(host)
 
                 returned.isLeft {

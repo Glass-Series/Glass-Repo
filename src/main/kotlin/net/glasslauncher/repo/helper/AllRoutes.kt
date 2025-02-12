@@ -20,7 +20,7 @@ fun Application.collectRoutes(): List<String> {
  *               It accumulates as it goes deeper into the route tree.
  * @return A list of strings representing the terminal routes.
  */
-private fun Route.allRoutes(prefix: String = ""): List<String> {
+private fun RoutingNode.allRoutes(prefix: String = ""): List<String> {
     val routes = mutableListOf<String>()
 
     /**
@@ -29,8 +29,8 @@ private fun Route.allRoutes(prefix: String = ""): List<String> {
      *
      * @return True if the route is a prefix route, false otherwise.
      */
-    fun Route.isPrefixRoute(): Boolean {
-        return this.children.any { it.selector is HttpMethodRouteSelector }
+    fun RoutingNode.isPrefixRoute(): Boolean {
+        return children.any { it.selector is HttpMethodRouteSelector }
     }
 
     /**
@@ -38,7 +38,7 @@ private fun Route.allRoutes(prefix: String = ""): List<String> {
      *
      * @param currentPath The current path accumulated from the parent routes.
      */
-    fun Route.collectRoutes(currentPath: String) {
+    fun RoutingNode.collectRoutes(currentPath: String) {
         val pathSegment = when (val selector = this.selector) {
             is PathSegmentConstantRouteSelector -> "${currentPath}/${selector.value}"
             is PathSegmentParameterRouteSelector -> "${currentPath}/{${selector.name}}"

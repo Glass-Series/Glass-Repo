@@ -92,8 +92,8 @@ suspend fun respond(call: ApplicationCall, vars: Map<String, Any> = HashMap(), o
     if (cookie != null) {
         vars["usersession"] = Users.users[cookie.userId]
     }
-    if (call.instanceOf(RoutingApplicationCall::class)) {
-        var path: String = (call as RoutingApplicationCall).route.parent.toString()
+    if (call.instanceOf(RoutingCall::class)) {
+        var path: String = (call as RoutingCall).route.parent.toString()
         if (override != null) {
             path = override
         }
