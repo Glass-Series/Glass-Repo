@@ -97,10 +97,10 @@
         <div class="container">
             <div class="navbar-inner navbar-content-center" id="cookie_accept" style="width: 100%;">
 
-                <a href="#" class="btn btn-default float-right">Close</a>
-                <p class="text-muted credit" style="margin-top: 16px;">
+                <a href="#" class="btn btn-default" style="margin-top: -0.2rem">Close</a>
+                <span style="color: rgb(161, 161, 161)">
                     By using this website you are consenting the use of cookies in accordance with it's <a href="/data" target="_blank">data policy</a>.
-                </p>
+                </span>
             </div>
         </div>
 
