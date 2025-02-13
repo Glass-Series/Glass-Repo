@@ -158,9 +158,9 @@
             </div>
             {% endif %}
         {% endfor %}
-        <div class="col" style="margin-left: auto; flex-grow: 0; width: 10rem; display: inline-flex"><input id="pageInput" type="number" style="width: 4rem"><a class="btn btn-sm btn-success" style="padding-top: 2px; padding-bottom: 2px" href="#">Go</a></div>
+        <div class="col" style="margin-left: auto; flex-grow: 0; width: 10rem; display: inline-flex"><input id="pageInput" type="number" style="width: 4rem" min="1" onkeyup="if (event.keyCode === 13) {gotoPage(parseInt($('#pageInput')[0].value) - 1)}"><a class="btn btn-sm btn-success" style="padding-top: 2px; padding-bottom: 2px" onclick="gotoPage(parseInt($('#pageInput')[0].value) - 1)" href="#">Go</a></div>
         <script>
-            $("#pageInput")[0].value = searchParams.get("page")
+            $("#pageInput")[0].value = parseInt(searchParams.get("page")) + 1
         </script>
     </div>
     <div class="searchabletable">
