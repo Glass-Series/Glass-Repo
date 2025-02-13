@@ -416,6 +416,10 @@ kbd {
     color: #cecece;
 }
 
+.ts-dropdown {
+    color: var(--bs-btn-color)!important;
+}
+
 img[alt="small"] {
     max-width: 256px;
     height: auto;
