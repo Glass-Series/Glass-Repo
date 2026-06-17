@@ -13,6 +13,7 @@ import java.util.stream.Stream
 import kotlin.io.path.isDirectory
 import kotlin.math.ceil
 import kotlin.math.floor
+import kotlin.math.max
 import kotlin.math.min
 import kotlin.math.round
 
@@ -76,7 +77,7 @@ class ModRepo {
         modStream = matchStringLists("tags", parameters, modStream)
 
         val mods = modStream.collect(Collectors.toCollection(::ArrayList))
-        val modsPerPage = (parameters["amount"]?.toIntOrNull() ?: 20).coerceIn(min(10, mods.size - 1) .. min(50, mods.size - 1))
+        val modsPerPage = (parameters["amount"]?.toIntOrNull() ?: 20).coerceIn(min(10, mods.size - 1) .. min(50, max(1, mods.size - 1)))
 
         when(parameters["sortMode"]) {
             "relevancy" -> mods.sortByDescending { relevancy[it] }
