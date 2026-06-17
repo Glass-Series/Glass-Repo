@@ -1,13 +1,12 @@
 import java.io.ByteArrayOutputStream
 
 val ktorVersion: String by project
-val kotlinVersion: String by project
 val logbackVersion: String by project
 
 plugins {
     application
-    kotlin("jvm") version "2.0.20"
-    kotlin("plugin.serialization") version "2.0.20"
+    kotlin("jvm") // version is handled in settings.gradle.kts
+    kotlin("plugin.serialization")
     id("idea")
     id("eclipse")
 }

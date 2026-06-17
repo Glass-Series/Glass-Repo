@@ -15,6 +15,7 @@ import io.ktor.server.plugins.contentnegotiation.*
 import io.ktor.server.plugins.doublereceive.*
 import kotlinx.serialization.json.Json
 import java.io.File
+import java.net.URI
 import java.net.URL
 import java.nio.charset.StandardCharsets
 import kotlin.system.exitProcess
@@ -31,16 +32,18 @@ fun main() {
     var json: VersionManifestList
     try {
         json = JsonReader.fromJson(
-            URL("https://skyrising.github.io/mc-versions/version_manifest.json").openStream().readAllBytes()
+            URI.create("https://meta.celestia.sh/v1/manifest.json").toURL().openStream().readAllBytes()
                 .toString(StandardCharsets.UTF_8)
         )
         cacheFile.writeText(JsonReader.toJson(json))
     } catch (e: Exception) {
-        GlassLogger.INSTANCE.error("Unable to get remote manifests, using last successfully cached file.")
+        GlassLogger.INSTANCE.error("Unable to get remote manifests, using last successfully cached file.", e)
         json = JsonReader.fromJson(cacheFile.readText())
     }
     json.process()
-    VersionManifestList.allVersions.entries.stream().sorted(Comparator.comparing<MutableMap.MutableEntry<String, VersionDetails>?, Long?> { it.value.releaseTime }.reversed()).forEach {
+    VersionManifestList.allVersions.entries.sortedBy {
+        it.value.releaseTime
+    }.reversed().forEach {
         val header = if (it.value.useJustMajorAsHeader) it.value.majorVersion else "${it.value.majorVersion}.${it.value.minorVersion}"
         VersionManifestList.allVersionsKeys.add(it.key)
         VersionManifestList.headerToVersions.putIfAbsent(header, ArrayList())

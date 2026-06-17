@@ -32,7 +32,7 @@ class VersionManifestList(
         val allVersionsKeys = ArrayList<String>()
         var headerToVersions = LinkedHashMap<String, ArrayList<VersionDetails>>()
 
-        val versionRegex = Regex("(^[a-z ]*?[0-9]?)\\.([0-9]*)\\.?-?(.*)?", RegexOption.IGNORE_CASE)
+        val versionRegex = Regex("(^[a-z ]*?[0-9]*?)\\.([0-9]*)\\.?-?(.*)?", RegexOption.IGNORE_CASE)
 
         // TODO: Do this better. Low priority.
         fun addToClassMap(id: String, map: Map<String, Boolean>, details: VersionDetails, side: String) {
@@ -116,8 +116,6 @@ class VersionManifestListEntry(
     val id: String,
     @Serializable(JsonReader.URLSerializer::class)
     val url: URL,
-    @Serializable(JsonReader.URLSerializer::class)
-    val details: URL,
     @SerialName("type")
     val releaseType: String,
 ) {
@@ -134,7 +132,7 @@ class VersionManifestListEntry(
             val detailsCacheFile = File("repo/minecraftMeta/${id}.json")
             var detailsObj: VersionDetails
             if (!detailsCacheFile.exists()) {
-                detailsObj = JsonReader.fromJson<VersionDetails>(details.openStream().readAllBytes().toString(StandardCharsets.UTF_8))
+                detailsObj = JsonReader.fromJson<VersionDetails>(url.openStream().readAllBytes().toString(StandardCharsets.UTF_8))
                 detailsCacheFile.writeText(JsonReader.toJson(detailsObj))
             }
             else {
@@ -143,7 +141,7 @@ class VersionManifestListEntry(
                     detailsObj.isFromCache = true
                 } catch (e: Exception) {
                     GlassLogger.INSTANCE.error("An exception occurred while trying to read cached version details for ${id}!")
-                    detailsObj = JsonReader.fromJson<VersionDetails>(details.openStream().readAllBytes().toString(StandardCharsets.UTF_8))
+                    detailsObj = JsonReader.fromJson<VersionDetails>(url.openStream().readAllBytes().toString(StandardCharsets.UTF_8))
                 }
             }
             generateOrLoadClassMap(detailsObj.downloads.client, detailsObj)
@@ -203,17 +201,11 @@ class VersionManifestListEntry(
 
 @Serializable
 class LatestVersionsEntry(
-    @SerialName("old_alpha")
-    val oldAlpha: String,
-    @SerialName("classic_server")
-    val classicServer: String,
-    @SerialName("alpha_server")
-    val alphaServer: String,
-    @SerialName("old_beta")
-    val oldBeta: String,
     val snapshot: String,
     val release: String,
-    val pending: String,
+    @SerialName("april-fools")
+    val aprilFools: String,
+    val special: String,
 )
 
 @Serializable

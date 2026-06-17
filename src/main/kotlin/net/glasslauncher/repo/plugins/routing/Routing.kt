@@ -103,6 +103,7 @@ suspend fun respond(call: ApplicationCall, vars: Map<String, Any> = HashMap(), o
         else if (path == "/repo" || path == "/repo/") {
             path += "/index"
         }
+        path = path.trimStart('/')
         call.respond(PebbleContent("$path.peb", vars))
     }
     else if (call.instanceOf(NettyApplicationCall::class)) {
