@@ -4,7 +4,7 @@ import io.ktor.server.application.*
 import io.ktor.server.routing.*
 
 fun Application.configureModpackRepoRouting() {
-    log.info("Adding avatars routes")
+    log.info("Adding modpack repo routes")
 
     routing {
         get("/repo/modpacks") {

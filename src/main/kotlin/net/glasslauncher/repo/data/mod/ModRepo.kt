@@ -96,7 +96,7 @@ class ModRepo {
         val page = (parameters["page"]?.toIntOrNull() ?: 0).coerceIn(0..< pages)
         val startIndex = modsPerPage * page
 
-        return FilterResult(mods.slice(startIndex .. ((startIndex - 1) + if (startIndex + modsPerPage >= mods.size) (mods.size % modsPerPage) else modsPerPage)), pages)
+        return FilterResult(mods.slice(startIndex .. startIndex + if (startIndex + modsPerPage >= mods.size) (mods.size % modsPerPage) else modsPerPage), pages)
     }
 
     private fun matchStringLists(id: String, parameters: Parameters, modStream: Stream<Mod>): Stream<Mod> {

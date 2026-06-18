@@ -1,6 +1,5 @@
 package net.glasslauncher.repo
 
-import net.glasslauncher.repo.data.minecraft.VersionDetails
 import net.glasslauncher.repo.data.minecraft.VersionManifestList
 import net.glasslauncher.repo.plugins.configureHTTP
 import net.glasslauncher.repo.plugins.configureSessions
@@ -16,7 +15,6 @@ import io.ktor.server.plugins.doublereceive.*
 import kotlinx.serialization.json.Json
 import java.io.File
 import java.net.URI
-import java.net.URL
 import java.nio.charset.StandardCharsets
 import kotlin.system.exitProcess
 
@@ -26,21 +24,19 @@ fun main() {
         exitProcess(1)
     }
 
-    System.getProperties().setProperty("io.ktor.development", "true")
-
     val cacheFile = Repo.mcMetaPath.cd("index.json")
-    var json: VersionManifestList
+    var versionManifestList: VersionManifestList
     try {
-        json = JsonReader.fromJson(
+        versionManifestList = JsonReader.fromJson(
             URI.create("https://meta.celestia.sh/v1/manifest.json").toURL().openStream().readAllBytes()
                 .toString(StandardCharsets.UTF_8)
         )
-        cacheFile.writeText(JsonReader.toJson(json))
+        cacheFile.writeText(JsonReader.toJson(versionManifestList))
     } catch (e: Exception) {
         GlassLogger.INSTANCE.error("Unable to get remote manifests, using last successfully cached file.", e)
-        json = JsonReader.fromJson(cacheFile.readText())
+        versionManifestList = JsonReader.fromJson(cacheFile.readText())
     }
-    json.process()
+    versionManifestList.process()
     VersionManifestList.allVersions.entries.sortedBy {
         it.value.releaseTime
     }.reversed().forEach {

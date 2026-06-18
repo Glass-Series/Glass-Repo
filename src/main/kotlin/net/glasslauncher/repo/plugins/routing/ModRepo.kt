@@ -89,7 +89,7 @@ fun Application.configureModRepoRouting() {
             ), "repo/edit_mod")
         }
 
-        post<ModRoute.View.Edit> {
+        post<ModRoute.View.Edit> { it ->
             try {
                 val form = call.receiveParameters()
                 val modSkeleton = ModSkeleton()
@@ -106,7 +106,6 @@ fun Application.configureModRepoRouting() {
                     }
 
                     // There's probably a better way to do this, but I'm at my wit's end.
-                    @Suppress("IMPLICIT_CAST_TO_ANY")
                     val value =
                         when (property.returnType.classifier) {
                             List::class -> {
