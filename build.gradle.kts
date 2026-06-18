@@ -7,8 +7,13 @@ plugins {
     application
     kotlin("jvm") // version is handled in settings.gradle.kts
     kotlin("plugin.serialization")
+    id("io.ktor.plugin") version "3.5.0"
     id("idea")
     id("eclipse")
+}
+
+ktor {
+    development = true
 }
 
 idea.module {
@@ -84,7 +89,7 @@ dependencies {
     implementation("org.commonmark:commonmark-ext-heading-anchor:0.22.0")
 
     // Makes IntelliJ not scream about missing dirs inside templates
-    implementation(fileTree("src/main/resources/net/glasslauncher/repo").matching {
+    compileOnly(fileTree("src/main/resources/net/glasslauncher/repo").matching {
         include("templates/**")
     })
 
@@ -102,21 +107,18 @@ tasks.withType(Zip::class.java).configureEach {
 }
 
 fun getGitHash(): String {
-    val stdout = ByteArrayOutputStream()
-    val errout = ByteArrayOutputStream()
-
-    exec {
+    val result = providers.exec {
         commandLine("git", "rev-parse", "--short", "HEAD")
-        standardOutput = stdout
-        errorOutput = errout
         isIgnoreExitValue = true
     }
 
-    if (stdout.toString().trim().length == 7) {
-        return stdout.toString().trim()
+    val out = result.standardOutput.asText.get().trim()
+
+    if (out.length == 7) {
+        return out
     }
     else {
-        error(errout)
+        error(result.standardError.asText.get())
     }
 }
 
