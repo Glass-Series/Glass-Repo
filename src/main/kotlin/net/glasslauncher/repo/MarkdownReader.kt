@@ -20,6 +20,7 @@ class MarkdownReader {
         ).build()
         private val renderer = HtmlRenderer.builder()
             .softbreak("<br/>")
+            .escapeHtml(true)
             .build()
 
         fun renderMarkdown(md: String): String {
