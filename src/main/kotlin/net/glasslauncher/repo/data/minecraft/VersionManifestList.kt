@@ -201,11 +201,16 @@ class VersionManifestListEntry(
 
 @Serializable
 class LatestVersionsEntry(
+    @SerialName("old_alpha")
+    val oldAlpha: String,
+    @SerialName("classic_server")
+    val classicServer: String,
+    @SerialName("alpha_server")
+    val alphaServer: String,
+    @SerialName("old_beta")
+    val oldBeta: String,
     val snapshot: String,
     val release: String,
-    @SerialName("april-fools")
-    val aprilFools: String,
-    val special: String,
 )
 
 @Serializable

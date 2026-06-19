@@ -28,7 +28,7 @@ fun main() {
     var versionManifestList: VersionManifestList
     try {
         versionManifestList = JsonReader.fromJson(
-            URI.create("https://meta.celestia.sh/v1/manifest.json").toURL().openStream().readAllBytes()
+            URI.create("https://ornithemc.net/mc-versions/gen2/version_manifest.json").toURL().openStream().readAllBytes()
                 .toString(StandardCharsets.UTF_8)
         )
         cacheFile.writeText(JsonReader.toJson(versionManifestList))
